@@ -6,9 +6,6 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapLayers;
-import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.objects.CircleMapObject;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileSet;
@@ -23,7 +20,14 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
  */
 public class AssetLoaderTiled {
 	// Permet de récupérer le fichier .tmx
-	public static TiledMap tiledMap;	
+	public static TiledMap tiledMap;
+	
+	/*
+	 * Variables utilisées pour placer la camera du renderer
+	 * et pour empêcher la sortie du NamCap
+	 */
+	public static float tiledMapWidth;
+	public static float tiledMapHeight;
 
 
 	// MapLayers => tableau de tous les calques du fichier .tmx
@@ -57,6 +61,13 @@ public class AssetLoaderTiled {
 
 		// On récupère le fichier .tmx
 		tiledMap = new TmxMapLoader().load("images/terrain_foot.tmx");
+		
+		// On récupère les largeur et hauteur du tilemap
+		tiledMapWidth = ((int)tiledMap.getProperties().get("tilewidth")) *	// Largeur d'un tile
+				((int)tiledMap.getProperties().get("width"));				// Nombre de tiles (en largeur)
+		
+		tiledMapHeight = ((int)tiledMap.getProperties().get("tileheight")) *	// Hauteur d'un tile
+				((int)tiledMap.getProperties().get("height"));				// Nombre de tiles (en hauteur)
 
 		// On instancie les calques de tiles et d'objets contenus dans le mapLayers
 		mapLayers = tiledMap.getLayers();
@@ -71,6 +82,7 @@ public class AssetLoaderTiled {
 		/*------- Calques d'objets-------*/
 		layerObjetMurs = mapLayers.get("objetMurs");
 		/*--------------------------------*/
+		
 
 
 		loadNamCapAnimation();
@@ -107,5 +119,6 @@ public class AssetLoaderTiled {
 
 	public static void dispose(){
 		tiledMap.dispose();
+		texture.dispose();
 	}
 }

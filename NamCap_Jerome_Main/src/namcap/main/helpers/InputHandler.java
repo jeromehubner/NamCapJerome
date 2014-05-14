@@ -5,7 +5,6 @@ import namcap.main.gameObject.NamCap;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.math.Vector2;
 
 /**
  * Classe implémentant des méthodes appelées quand l'appli reçoit
@@ -18,10 +17,11 @@ import com.badlogic.gdx.math.Vector2;
 public class InputHandler implements InputProcessor {
 	
 	private NamCap namCap;
-	private int touchX, touchY;
+	private int touchDownX, touchDownY;
 	
-	// Vitesse utilisée pour la méthode accelerometre2()
-	private Vector2 vitesseExponentielle;
+	
+//	// Vitesse utilisée pour la méthode accelerometre2()
+//	private Vector2 vitesseExponentielle;
 	
 	
 	/*------- PARAMETRES MODIFIABLES -------*/
@@ -31,7 +31,7 @@ public class InputHandler implements InputProcessor {
 	private float sensibiliteAccelerometre = 3;
 	/*------------------------------------------------*/
 
-	
+
 	
 	public InputHandler(NamCap namCap) {
 		/*
@@ -39,8 +39,7 @@ public class InputHandler implements InputProcessor {
 		 */
 		this.namCap = namCap;
 		
-		
-		vitesseExponentielle = new Vector2();
+//		vitesseExponentielle = new Vector2();
 	}
 
 
@@ -54,20 +53,24 @@ public class InputHandler implements InputProcessor {
 	public boolean keyDown(int keycode) {
 		switch(keycode)
 		{
-		case Input.Keys.LEFT:
-			namCap.goLeft();	
+		case Input.Keys.UP:
+			namCap.wantGoUp();
 			break;
-
+			
 		case Input.Keys.DOWN:
-			namCap.goDown();
+			namCap.wantGoDown();
+			break;
+			
+		case Input.Keys.LEFT:
+			namCap.wantGoLeft();
 			break;
 
 		case Input.Keys.RIGHT:
-			namCap.goRight();
+			namCap.wantGoRight();
 			break;
-
-		case Input.Keys.UP:
-			namCap.goUp();
+			
+		case Input.Keys.SPACE:
+			namCap.stop();
 			break;
 		}
 		return true;
@@ -91,12 +94,14 @@ public class InputHandler implements InputProcessor {
 	 * Cette méthode est utilisée pour récupérer les coordonnées lorsque
 	 * doigt touche l'écran. Ces coordonnées sont renseignées dans
 	 * les 2 variables d'instance correspondantes.
-	 * --- Utilisée pour le lanceur Android ---
 	 */
+	/*---------------------------------------------------------*/
+	/*------- Méthodes utilisées par le lanceur Android -------*/
+	/*---------------------------------------------------------*/
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		this.touchX = screenX;
-		this.touchY = screenY;
+		this.touchDownX = screenX;
+		this.touchDownY = screenY;
 
 		return true;
 	}
@@ -110,22 +115,25 @@ public class InputHandler implements InputProcessor {
 	 */
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		int deltaX = screenX - this.touchX;
-		int deltaY = screenY - this.touchY;
+		int deltaX = screenX - this.touchDownX;
+		int deltaY = screenY - this.touchDownY;
 
-		if (deltaX > 100) {
-			namCap.goRight();
+		// Mouvement en X
+		if (deltaY < -100) {
+			namCap.wantGoUp();
 		}
-		else if (deltaX < -100) {
-			namCap.goLeft();
+		else if (deltaY > 100) {
+			namCap.wantGoDown();
 		}
-		if (deltaY > 100) {
-			namCap.goDown();
+		
+		// Mouvement en Y
+		if (deltaX < -100) {
+			namCap.wantGoLeft();
 		}
-		else if (deltaY < -100) {
-			namCap.goUp();
+		else if (deltaX > 100) {
+			namCap.wantGoRight();
 		}
-
+		
 		return true;
 	}
 
@@ -160,29 +168,29 @@ public class InputHandler implements InputProcessor {
 	public boolean accelerometre(){
 		// Les inclinaisons CI-DESSOUS tiennent compte du mode paysage du jeu.
 
-		if(Gdx.input.getAccelerometerX()>sensibiliteAccelerometre){		// Inclinaison vers soi
-			namCap.goDown();
-		}
-		else if(Gdx.input.getAccelerometerX()<-sensibiliteAccelerometre){	// Inclinaison au dela de soi
-			namCap.goUp();
-		}
-		else if(Gdx.input.getAccelerometerY()>sensibiliteAccelerometre){	// Inclinaison vers la droite
-			namCap.goRight();
-		}
-		else if (Gdx.input.getAccelerometerY()<-sensibiliteAccelerometre){	// Inclinaison vers la gauche
-			namCap.goLeft();
-		}
+		if(Gdx.input.getAccelerometerX()<-sensibiliteAccelerometre)	// Inclinaison au dela de soi
+			namCap.wantGoUp();
+		
+		else if(Gdx.input.getAccelerometerX()>sensibiliteAccelerometre)		// Inclinaison vers soi
+			namCap.wantGoDown();
+		
+		else if (Gdx.input.getAccelerometerY()<-sensibiliteAccelerometre)	// Inclinaison vers la gauche
+			namCap.wantGoLeft();
+		
+		else if(Gdx.input.getAccelerometerY()>sensibiliteAccelerometre)	// Inclinaison vers la droite
+			namCap.wantGoRight();
+		
 		return true;
 	}
 	
-	/**
-	 * Cette méthode permet de déplacer le NamCap à la manière d'une bille
-	 * sur une surface plane (permet donc le déplacement en diagonale). 
-	 */
-	public boolean accelerometre2(){
-		vitesseExponentielle.x += Gdx.input.getAccelerometerY() *2;
-		vitesseExponentielle.y += Gdx.input.getAccelerometerX() *2;
-		namCap.setVitesse(vitesseExponentielle);
-		return true;
-	}
+//	/**
+//	 * Cette méthode permet de déplacer le NamCap à la manière d'une bille
+//	 * sur une surface plane (permet donc le déplacement en diagonale). 
+//	 */
+//	public boolean accelerometre2(){
+//		vitesseExponentielle.x += Gdx.input.getAccelerometerY() *2;
+//		vitesseExponentielle.y += Gdx.input.getAccelerometerX() *2;
+//		namCap.setVitesse(vitesseExponentielle);
+//		return true;
+//	}
 }

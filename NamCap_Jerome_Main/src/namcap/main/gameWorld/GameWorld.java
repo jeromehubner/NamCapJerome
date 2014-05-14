@@ -30,19 +30,19 @@ public class GameWorld {
 
 
 	public GameWorld() {
-		
 		MapObjects mapObjects = AssetLoaderTiled.layerObjetMurs.getObjects();
+
+
 		RectangleMapObject rectangleMapObject;
 		
 		murs = new Array<Mur>();
-		
+
 		for(MapObject m : mapObjects){
 			rectangleMapObject = (RectangleMapObject)m;
-			
+
 			murs.add(new Mur(rectangleMapObject.getRectangle()));
 		}
-		
-		
+
 		namCap = new NamCap(4, 4, 24, 24);
 	}
 
@@ -57,17 +57,16 @@ public class GameWorld {
 	 */
 	public void update(float delta) {
 		// System.out.println("GameWorld - update");
-		
-		for(Mur m : murs)
-			if(m.collision(namCap))
-				namCap.stopNamCap();
-			
-		
+
 		/*
 		 * La méthode update() est définie dans la classe NamCap
 		 * Elle contient les changements à apporter au namCap.
 		 */
 		namCap.update(delta);
+		
+		
+		for(Mur m : murs)
+			m.testCollision(namCap);
 	}
 
 
@@ -75,10 +74,7 @@ public class GameWorld {
 		return namCap;
 	}
 
-
-
 	public Array<Mur> getMurs() {
 		return murs;
 	}
-	
 }

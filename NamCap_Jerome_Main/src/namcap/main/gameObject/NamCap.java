@@ -1,9 +1,13 @@
 package namcap.main.gameObject;
 
+import namcap.main.helpers.AssetLoaderTiled;
 import namcap.main.screens.GameScreen;
 
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Circle;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 
 /**
  * Classe contenant le NamCap, sa position, ses dimensions, sa vitesse, son accélération, sa rotation.
@@ -19,14 +23,25 @@ public class NamCap {
 	private float rotation;
 	private float largeur;
 	private float hauteur;
-	
-	
+
+	/*
+	 * Cette variable permet de mémoriser le geste du joueur.
+	 */
+	private Vector2 vitesseMemorisee;
+
+
+	//------- Variables utilisées pour la détection et la réaction aux collisions -------//
+	int oldX, oldY;
+	float tileWidth , tileHeight;
+	int FacteurOldPosition = 3;
+
+
 	/*------- PARAMETRES DU NAMCAP MODIFIABLES -------*/
 	/*----------- (dans le menu 'Option') ------------*/
-	private float vitesseDeplacement = 3*25;	// 25 est la largeur du NamCap
+	private float vitesseDeplacement = 3*32;	// 32 est la largeur du NamCap
 	/*------------------------------------------------*/
 
-	
+
 	/*
 	 * Cette variable correspond au cercle entourant le NamCap.
 	 * Elle sera utilsée pour la gestion des collisions.
@@ -34,34 +49,21 @@ public class NamCap {
 	private Circle boundingCircle;
 
 
-	public NamCap(float x , float y, float largeur, float hauteur) {
+
+	public NamCap(int x , int y, float largeur, float hauteur) {
 
 		this.position = new Vector2(x, y);
 		this.largeur = largeur;
 		this.hauteur = hauteur;
 
 		vitesse = new Vector2(0, 0);
-//		acceleration = new Vector2(0, 140);
+		vitesseMemorisee = new Vector2();
 
 		boundingCircle = new Circle();
 	}
 
 
-
 	public void update(float delta){
-		
-		// Met à jour la rotation du NamCap.
-		testRotation();
-		
-		
-		// Empêche le NamCap de sortir de l'écran.
-		empecheSortie();
-
-
-		// On place les coordonnées des bords du NamCap.
-		boundingCircle.set(position.x + largeur/2, position.y + hauteur/2, largeur/2);
-
-
 		/*
 		 * On met à jour la position de notre NamCap
 		 * en ajoutant à celle-ci le nouveau vecteur vitesse
@@ -70,26 +72,47 @@ public class NamCap {
 		 * Cela permet de prendre en compte la vitesse du cpu
 		 * du mobile ou de la tablette utilisé.
 		 */
-		position.add(vitesse.cpy().scl(delta));
-	}
-	
-	
 
+		// Met à jour la rotation du NamCap.
+		testRotation();
+
+		// Empêche le NamCap de sortir de l'écran.
+		empecheSortie();
+
+
+		// Save oldPosition
+		oldX = (int)position.x;
+		oldY = (int)position.y;
+
+
+		// Move on X:
+		position.x += vitesse.x * delta;
+
+		// Move on Y:
+		position.y += vitesse.y * delta;
+
+
+		boundingCircle.set(position.x +largeur/2, position.y +hauteur/2, largeur/2);
+
+	}
+
+	
 	/**
 	 * Méthode qui teste la variable vitesse du NamCap est place ainsi
 	 * la rotation de celui-ci.
 	 */
 	private void testRotation(){
-		if(isRight())
-			rotation = 0;
-		if(isDown())
+		if(isGoingUp())
 			rotation = 90;
-		if (isLeft())
-			rotation = -180;
-		if(isUp())
+		if(isGoingDown())
 			rotation = -90;
+		if (isGoingLeft())
+			rotation = -180;
+		if(isGoingRight())
+			rotation = 0;
 	}
-	
+
+
 	
 	/**
 	 * Méthode qui fait rentrer le NamCap de l'autre côté de l'écran
@@ -97,23 +120,98 @@ public class NamCap {
 	 * compte de la largeur du NamCap.
 	 */
 	private void empecheSortie(){
-		if(position.x > GameScreen.largeurScreen)
-			position.x = 0-largeur;
-		if(position.x < 0-largeur)
-			position.x = GameScreen.largeurScreen;
-		if(position.y > GameScreen.hauteurScreen)
-			position.y = 0-hauteur;
-		if(position.y < 0-hauteur)
-			position.y = GameScreen.hauteurScreen;
+		// Vérification en X 
+		if(position.x > (AssetLoaderTiled.tiledMapWidth - largeur))
+			position.x = 4; // 4px correspond au bord du NamCap
+		if(position.x < 0)
+			position.x = (AssetLoaderTiled.tiledMapWidth - largeur);
+
+		// Vérification en Y
+		if(position.y > (AssetLoaderTiled.tiledMapHeight - hauteur))
+			position.y = 4; // 4px correspond au bord du NamCap
+		if(position.y < 0)
+			position.y = (AssetLoaderTiled.tiledMapHeight - hauteur);
 	}
+
 	
 	
-//	/**
-//	 * Méthode appelée par la Classe InputHandler dans la méthode onTouch().
-//	 */
-//	public void onClick(Vector2 vitesseModifiee){
-//		vitesse = vitesseModifiee;
-//	}
+	/**
+	 * Liste de méthodes utilisées pour mémoriser la direction du joueur.
+	 * Si le joueur est sur 
+	 */
+	public void wantGoUp(){
+		/*
+		 * Vérification que la positionX du NamCap est un multiple de 32 (largeur d'un tile)
+		 * Cette vérification prend en compte la position initiale du NamCap (4,4) + une tolérance (1)
+		 * Si oui, le NamCap tourne (sur un mur, il s'arrête)
+		 * Si non, la vitesse est mémorisée dans le vector2 vitesseMemorisee (laquelle sera
+		 * interprété lors d'une collision). 
+		 */
+		vitesseMemorisee.set(0, 0);		// Initialisation de la vitesseMérmorisée
+		if((position.x)%32 <= 5)
+			goUp();
+		else {
+			vitesseMemorisee.x = 0;
+			vitesseMemorisee.y = vitesseDeplacement;
+		}
+	}
+
+	public void wantGoDown(){
+		vitesseMemorisee.set(0, 0);		// Initialisation de la vitesseMérmorisée
+		if((position.x)%32 <= 5)
+			goDown();
+		else {
+			vitesseMemorisee.x = 0;
+			vitesseMemorisee.y = -vitesseDeplacement;
+		}
+	}
+
+	public void wantGoLeft(){
+		vitesseMemorisee.set(0, 0);		// Initialisation de la vitesseMérmorisée
+		if((position.y)%32 <= 5)
+			goLeft();
+		else {
+			vitesseMemorisee.x = -vitesseDeplacement;
+			vitesseMemorisee.y = 0;
+		}
+	}
+
+	public void wantGoRight(){
+		vitesseMemorisee.set(0, 0);		// Initialisation de la vitesseMérmorisée
+		if((position.y)%32 <= 5)
+			goRight();
+		else {
+			vitesseMemorisee.x = vitesseDeplacement;
+			vitesseMemorisee.y = 0;
+		}
+	}
+
+
+	/**
+	 * Liste de méthodes qui permet de diriger le NamCap à droite, en bas, à gauche ou en haut.
+	 * Elles sont utilisées dans la classe InputHandler.
+	 * Ces méthodes agissent pour cela sur le vecteur vitesse du NamCap.
+	 */
+	private void goUp(){
+		vitesse.x = 0;
+		vitesse.y = vitesseDeplacement;
+	}
+	private void goDown(){
+		vitesse.x = 0;
+		vitesse.y = -vitesseDeplacement;
+	}
+	private void goLeft(){
+		vitesse.x = -vitesseDeplacement;
+		vitesse.y = 0;
+	}
+	private void goRight(){
+		vitesse.x = vitesseDeplacement;
+		vitesse.y = 0;
+	}
+
+	public void stop(){
+		vitesse.set(0, 0);
+	}
 
 
 	/**
@@ -121,101 +219,78 @@ public class NamCap {
 	 * C'est la variable vitesse.y qui permet de définir si la NamCap monte ou descend.
 	 * C'est la variable vitesse.x qui permet de définir si la NamCap va à gauche ou à droite.
 	 * L'axe des ordonnées est inversé. C'est à dire que le NamCap descend si vitesse.y > 0.
-	 * Ces méthodes sont utilisées dans la méthode 'update()' de cette Classe.
 	 * 
 	 * @return
 	 */
-	private boolean isDown(){
+	public boolean isGoingUp(){
 		return vitesse.y > 0;
 	}
-	private boolean isLeft(){
-		return vitesse.x < 0;
-	}
-	private boolean isUp(){
+	public boolean isGoingDown(){
 		return vitesse.y < 0;
 	}
-	private boolean isRight(){
+	public boolean isGoingLeft(){
+		return vitesse.x < 0;
+	}
+	public boolean isGoingRight(){
 		return vitesse.x > 0;
 	}
-	
-	
+
+
 	/**
-	 * Liste de méthodes qui permet de diriger le NamCap à droite, en bas, à gauche ou en haut.
-	 * Ces méthodes agissent pour cela sur le vecteur vitesse du NamCap.
+	 * Liste de méthodes permettant de donner la nouvelle au CamCap
+	 * lors d'une collision.
 	 */
-	public void goRight(){
-		vitesse.x = vitesseDeplacement;
+	public void reactToUpCollision(){
+		position.y = oldY -FacteurOldPosition;
 		vitesse.y = 0;
+		
+		// Après chaque collision en Y, on attribut la vitesseMémorisée en X.
+		vitesse.x = vitesseMemorisee.x;
 	}
-	public void goDown(){
-		vitesse.x = 0;
-		vitesse.y = -vitesseDeplacement;
-	}
-	public void goLeft(){
-		vitesse.x = -vitesseDeplacement;
+	public void reactToDownCollision(){
+		position.y = oldY +FacteurOldPosition;
 		vitesse.y = 0;
+		// Après chaque collision en Y, on attribut la vitesseMémorisée en X.
+		vitesse.x = vitesseMemorisee.x;
 	}
-	public void goUp(){
+	public void reactToLeftCollision(){
+		position.x = oldX +FacteurOldPosition;
 		vitesse.x = 0;
-		vitesse.y = vitesseDeplacement;
+		// Après chaque collision en X, on attribut la vitesseMémorisée en Y.
+		vitesse.y = vitesseMemorisee.y;
 	}
-	
-	
-	/**
-	 * Liste de méthodes vérifiant si le NamCap peut tourner.
-	 * Ces méthodes sont utilisées dans cette classe.
-	 */
-	private boolean canGoUp(){
-		return true;
+	public void reactToRightCollision(){
+		position.x = oldX -FacteurOldPosition;
+		vitesse.x = 0;
+		// Après chaque collision en X, on attribut la vitesseMémorisée en Y.
+		vitesse.y = vitesseMemorisee.y;
 	}
-	private boolean canGoDown(){
-		return true;		
-	}
-	private boolean canGoLeft(){
-		return true;
-	}
-	private boolean canGoRight(){
-		return true;
-	}
-	
-	
-	public void stopNamCap(){
-		vitesse.set(0, 0);
-	}
-	
-	
+
+
+
 	/*--------------------------------*/
 	/*------- GETTER && SETTER -------*/
 	/*--------------------------------*/
-	public Vector2 getPosition() {
-		return position;
-	}
-
-
-	public float getRotation() {
-		return rotation;
-	}
-
-
 	public float getLargeur() {
 		return largeur;
 	}
-
-
 	public float getHauteur() {
 		return hauteur;
 	}
 
 
-	public Circle getBoundingCircle() {
-		return boundingCircle;
+	public Vector2 getPosition() {
+		return position;
 	}
-
-
+	public float getRotation() {
+		return rotation;
+	}
 	public Vector2 getVitesse() {
 		return vitesse;
 	}
-	public void setVitesse(Vector2 vitesse) {
-		this.vitesse= vitesse ;
+
+
+	public Circle getBoundingCircle() {
+		return boundingCircle;
 	}
 }

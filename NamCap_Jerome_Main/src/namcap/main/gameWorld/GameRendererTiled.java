@@ -1,40 +1,23 @@
 package namcap.main.gameWorld;
 
-import namcap.main.gameObject.Mur;
 import namcap.main.gameObject.NamCap;
-import namcap.main.helpers.AssetLoader;
 import namcap.main.helpers.AssetLoaderTiled;
-import namcap.main.screens.GameScreen;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.utils.Array;
 
-public class GameRendererTiled {
-
-	// Les dimensions de la map : (32 x 20) tiles
-//	public static int tileMapWidth = (int)AssetLoaderTiled.tiledMap.getProperties().get("width");
-//	public static int tileMapHeight = (int)AssetLoaderTiled.tiledMap.getProperties().get("height");
-	
-	public float largeurScreen = GameScreen.largeurScreen;
-	public float hauteurScreen = GameScreen.hauteurScreen;
-			
+public class GameRendererTiled {	
 	
 	private GameWorld gameWorld;
 	
 	private OrthographicCamera orthographicCamera;
-	private SpriteBatch spriteBatch;
+//	private SpriteBatch spriteBatch;
 	private OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
-	private ShapeRenderer shapeRenderer;
+//	private ShapeRenderer shapeRenderer;
 	
 	
 	//------- GameObject -------//
@@ -43,7 +26,6 @@ public class GameRendererTiled {
 	 *  dans le contructeur de cette classe.
 	 */
 	private NamCap namCap;
-	private Array<Mur> murs;
 	//--------------------------//
 	
 	
@@ -51,7 +33,6 @@ public class GameRendererTiled {
 	//------- GameAssets -------//
 	private Animation namCapAnimation;
 	private TiledMapTileLayer tileBackGround, tileMurs;
-	private MapLayer objetMurs;
 	//--------------------------//
 	
 	/*
@@ -70,20 +51,21 @@ public class GameRendererTiled {
 		orthographicCamera = new OrthographicCamera();
 		
 		
-		orthographicCamera.setToOrtho(false, largeurScreen, hauteurScreen);
+		/*
+		 * On place les valeurs de la camera avec les dimensions du tiledMap pour
+		 * afficher tout le terrain à l'écran
+		 */		
+		orthographicCamera.setToOrtho(false, AssetLoaderTiled.tiledMapWidth, AssetLoaderTiled.tiledMapHeight);
 		
 		
+		// On renseigne la camera au orthogonalTiledMapRenderer 
 		orthogonalTiledMapRenderer.setView(orthographicCamera);
 		
 		
-		// On utilise le SpriteBatch du orthogonalTiledMapRenderer.
-		spriteBatch = orthogonalTiledMapRenderer.getSpriteBatch();
-		spriteBatch.setProjectionMatrix(orthographicCamera.combined);
-		
-		
-		shapeRenderer = new ShapeRenderer();
-		shapeRenderer.setProjectionMatrix(orthographicCamera.combined);
-		
+//		// On utilise le SpriteBatch du orthogonalTiledMapRenderer.
+//		spriteBatch = orthogonalTiledMapRenderer.getSpriteBatch();
+//		spriteBatch.setProjectionMatrix(orthographicCamera.combined);
+				
 		// Initialisation des variables
 		initGameObjects();
 		initAssets();
@@ -96,7 +78,6 @@ public class GameRendererTiled {
 	 */
 	private void initGameObjects(){
 		namCap = gameWorld.getNamCap();
-		murs = gameWorld.getMurs();
 	}
 	
 
@@ -107,6 +88,7 @@ public class GameRendererTiled {
 		tileBackGround = AssetLoaderTiled.layerTileTerrain;
 		tileMurs = AssetLoaderTiled.layerTileMurs;
 		namCapAnimation = AssetLoaderTiled.namCapAnimation;
+		
 	}
 	
 	
@@ -134,7 +116,8 @@ public class GameRendererTiled {
 	 */
 	private void drawNamCap(float runTime){
 		 
-		spriteBatch.draw(namCapAnimation.getKeyFrame(runTime),
+		orthogonalTiledMapRenderer.getSpriteBatch().draw(
+				namCapAnimation.getKeyFrame(runTime),
 				namCap.getPosition().x, namCap.getPosition().y,
 				namCap.getLargeur() /2.0f, namCap.getHauteur()/2.0f,
 				namCap.getLargeur(), namCap.getHauteur(), 
@@ -162,20 +145,23 @@ public class GameRendererTiled {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);		
 		
+		
 		//-------------------------------------------------------
-		shapeRenderer.begin(ShapeType.Filled);
-		
-		/*
-		 * Dessin du background couleur noir
-		 */
-		shapeRenderer.setColor(Color.BLACK);
-		shapeRenderer.rect(0, 0, largeurScreen, hauteurScreen);		
-		
-		shapeRenderer.end();
+//		/*
+//		 * Dessin du background couleur noir
+//		 * 
+//		 */
+//		shapeRenderer.begin(ShapeType.Filled);
+//		shapeRenderer.setColor(Color.BLACK);
+//		shapeRenderer.rect(0, 0, largeurScreen, hauteurScreen);		
+//		
+//		shapeRenderer.end();
 		//-------------------------------------------------------
 		
-
-		spriteBatch.begin();
+		
+		//------- SpriteBatch BEGIN -------//
+		orthogonalTiledMapRenderer.getSpriteBatch().begin();
+		
 		
 		
 		/*
@@ -196,11 +182,11 @@ public class GameRendererTiled {
 		drawNamCap(runTime);
 		
 		
-		
-		spriteBatch.end();	
+		//------- SpriteBatch END -------//
+		orthogonalTiledMapRenderer.getSpriteBatch().end();
 
 		/*
-		 * Les 3 méthodes draw() pourrait être remplacées par :
+		 * Les 2 méthodes drawBackGround() et drawMurs() pourrait être remplacées par :
 		 * 
 		 * orthogonalTiledMapRenderer.render();
 		 */

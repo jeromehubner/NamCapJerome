@@ -14,18 +14,8 @@ import com.badlogic.gdx.Screen;
  */
 public class GameScreen implements Screen {
 	private GameWorld gameWorld;
-//	private GameRenderer gameRenderer;
-	private GameRendererTiled gameRenderer;
+	private GameRendererTiled gameRendererTiled;
 	
-	/*
-	 * On récupère la largeur et la hauteur de l'écran avec
-	 * Gdx.graphics.get...()
-	 * Pour l'utilsation Desktop, cela correspondant aux valeurs
-	 * renseignées dans la config.
-	 */
-	public final static float largeurScreen = Gdx.graphics.getWidth();
-	public final static float hauteurScreen = Gdx.graphics.getHeight();
-
 	/*
 	 * Cette valeur sera utilsée dans la méthode render(float runTime)
 	 * de la classe GameRenderer.
@@ -52,7 +42,7 @@ public class GameScreen implements Screen {
 	public GameScreen() {
 		
 		gameWorld = new GameWorld();
-		gameRenderer = new GameRendererTiled(gameWorld);
+		gameRendererTiled = new GameRendererTiled(gameWorld);
 		
 		inputHandler = new InputHandler(gameWorld.getNamCap());
 		
@@ -99,7 +89,7 @@ public class GameScreen implements Screen {
 		
 		/*-------------------------------------------*/
 		/*------- Mise à jour du rendu du jeu -------*/
-		gameRenderer.render(runTime);
+		gameRendererTiled.render(runTime);
 		/*-------------------------------------------*/
 	}
 
@@ -108,6 +98,7 @@ public class GameScreen implements Screen {
 	@Override
 	public void resize(int width, int height) {
 		System.out.println("GameScreen - resizing");
+		
 	}
 	
 	@Override

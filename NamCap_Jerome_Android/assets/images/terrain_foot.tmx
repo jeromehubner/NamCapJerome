@@ -7,6 +7,11 @@
     <property name="test" value="null"/>
    </properties>
   </tile>
+  <tile id="643">
+   <properties>
+    <property name="block" value=""/>
+   </properties>
+  </tile>
  </tileset>
  <layer name="tileTerrain" width="32" height="20">
   <data encoding="base64" compression="zlib">
@@ -15,7 +20,7 @@
  </layer>
  <layer name="tileMurs" width="32" height="20">
   <data encoding="base64" compression="zlib">
-   eJyVlIFNwzAQRataCOgeCMgeCMgeCOgcoUmzR0XrNaASZI+qNFNwJv7K7+FLW0tPSc7x/fs+J6NRN4rxMNY7GG/j/ywix+S2Bs8P1cV6YB05pK/9sW6qPh0rlB7YEKG+mVAKlTAX6oS+1jhUm6YmzTPXc4r+oVgY6HEqJzSviFP9p/aB72cJ78gJzTtiYdQ7tOfWKFQerQ/NJ8Lyb+W3+luSVqFy4Rr40xzQBaXKz/ofruNTWDu7d9q/p/wpTbwTeBeWwio+s++gbX2v8O8T/hvKX6s5xJsI5+RnHtbZqdUaaLWU3xt7gNhW+BF2cV3KK/5hOPOV8R68TVyXC3Xw/gLEzmmPJ8Z+b47Uh+fMdblQx5fwTfMNxa5JM6xLDf5/6TNfkE94zl2XC3Xw/gLE7kk/HzhvNelVFMvJJzxPXRdHHRfCJe3JhGLPpBnWcY8A97cY7397U9f3Dp7rWAPquBFuaT6jWClUwjyuS/VU33u6Yk1Gnn3MhToehEeazym2d35d/w20Bo3Cu7538NzEGlDHi/BK81OKab/cIx3nZ9TZuL4P8NzGGlAH7y9AbBvOp7CL67IBUvW08VqT55YINSyFFc17iv0C0pUwtQ==
+   eJyNlG1qwzAMhktFGeQeY2z3GIPeY4z1HG2T+B5jm6/R5cdyj9I2p5hMLPZGldwYHprE+nolu4vFuLbLMp6NrN3ymo/MnNjewv1SXTsndjcjv9aHea369Ldt1tmpfEcg1bdnaqZhWiYY+XWOW7VpMOaKbJvGsJ2bS5bM2NKU8ibuAW1bym/1WtvtZ85Vg36t0lSqQ9ektUi8pOmZRl4BT78X35tvrWrHvreGfWnuAeJZczjQyA/TkX92tf6Yf4Oyx7wx88l8Md/5HXUfnPOL+qOhv3d8AvhY++iHK91t76z3RvzhRn7s3Yk5M5eCn/ynyNltHDvRVdFUE/ZX678D28rp93FmfunFE8QRTb+wjz17ANvkZ60V3B995iVHn38Ta0fTAMi3F9hfF84bnl+8R8kn5cCYG6Wp1N83mvrJvUD0fIORC2MHQ9MjjbUIsl/zc8O0NPWz7kSv6oiQK8VcZ2KOldgYMb0+R+jj4NArIpVjSn3v9N8vqya89xVdz0q/S509xBXNA001YX+D6vOJn8/MJfulhXOyZob1DIYW65vuszz/AfoAMLY=
   </data>
  </layer>
  <objectgroup color="#ffffff" name="objetMurs" width="32" height="20">
