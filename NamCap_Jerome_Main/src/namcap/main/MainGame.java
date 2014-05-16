@@ -1,7 +1,9 @@
 package namcap.main;
 
+
 import namcap.main.helpers.AssetLoaderTiled;
-import namcap.main.screens.GameScreen;
+import namcap.main.helpers.Assets;
+import namcap.main.screens.SplashScreen;
 
 import com.badlogic.gdx.Game;
 
@@ -17,14 +19,16 @@ public class MainGame extends Game {
 		 * déclarées 'static' pour permettre leur accès depuis d'autres Classe.
 		 */
 //		AssetLoader.load();
+		Assets.load();
 		AssetLoaderTiled.load();
-		setScreen(new GameScreen());
+		setScreen(new SplashScreen(this));
 	}
 
 	@Override
 	public void dispose() {
 		super.dispose();
 //		AssetLoader.dispose();
+		Assets.dispose();
 		AssetLoaderTiled.dispose();
 	}
 	

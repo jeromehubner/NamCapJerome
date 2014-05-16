@@ -1,13 +1,11 @@
 package namcap.main.gameObject;
 
 import namcap.main.helpers.AssetLoaderTiled;
-import namcap.main.screens.GameScreen;
 
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.math.Circle;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Array;
 
 /**
  * Classe contenant le NamCap, sa position, ses dimensions, sa vitesse, son accélération, sa rotation.
@@ -38,7 +36,8 @@ public class NamCap {
 
 	/*------- PARAMETRES DU NAMCAP MODIFIABLES -------*/
 	/*----------- (dans le menu 'Option') ------------*/
-	private float vitesseDeplacement = 3*32;	// 32 est la largeur du NamCap
+	//	private float vitesseDeplacement = 3*32;	// 32 est la largeur du NamCap
+	private float vitesseDeplacement = 3;
 	/*------------------------------------------------*/
 
 
@@ -47,6 +46,10 @@ public class NamCap {
 	 * Elle sera utilsée pour la gestion des collisions.
 	 */
 	private Circle boundingCircle;
+
+
+	TiledMapTileLayer murs;
+	TiledMapTileLayer intersections;
 
 
 
@@ -60,6 +63,9 @@ public class NamCap {
 		vitesseMemorisee = new Vector2();
 
 		boundingCircle = new Circle();
+
+		murs = AssetLoaderTiled.layerTileMurs;
+		intersections = AssetLoaderTiled.layerTileIntersections;
 	}
 
 
@@ -84,19 +90,83 @@ public class NamCap {
 		oldX = (int)position.x;
 		oldY = (int)position.y;
 
+		boolean collisionX = false, collisionY = false;
+		Cell cell;
 
-		// Move on X:
-		position.x += vitesse.x * delta;
-
+		
+		
+		
 		// Move on Y:
 		position.y += vitesse.y * delta;
+
+		
+		// Check collisionY
+		if(isGoingUp()){
+			if((cell = intersections.getCell((int)position.x, ((int)position.y +1))) != null)
+				if(cell.getTile().getProperties().containsKey("intersection")){
+					vitesse.y = 0;
+					vitesse.x = vitesseMemorisee.x;
+				}
+
+			if((cell = murs.getCell((int)position.x, ((int)position.y +1))) != null)
+				if(cell.getTile().getProperties().containsKey("block"))
+					reactToUpCollision();
+
+		}else if(isGoingDown()){
+			if((cell = intersections.getCell((int)position.x, (int) position.y)) != null){
+				vitesse.y = 0;
+				vitesse.x = vitesseMemorisee.x;
+			}
+
+			if((cell = murs.getCell((int)position.x, (int) position.y)) != null)
+				if(cell.getTile().getProperties().containsKey("block"))
+					reactToDownCollision();
+		}
+
+
+		
+		
+		// Move on X:
+		position.x+= vitesse.x * delta;
+
+		
+		// Check collisionX
+		if(isGoingLeft()){
+			System.out.println(position.x);
+
+			if((cell = (intersections.getCell((int)position.x , (int)position.y))) != null)
+				if(cell.getTile().getProperties().containsKey("intersection")){
+					vitesse.x = 0;
+					vitesse.y = vitesseMemorisee.y;
+				}
+
+			if((cell = (murs.getCell((int)position.x , (int)position.y))) != null)
+				if(cell.getTile().getProperties().containsKey("block"))
+					reactToLeftCollision();
+
+
+
+		}else if(isGoingRight()){
+			if((cell = (intersections.getCell(((int)position.x ) +1, (int)position.y))) != null)
+				if(cell.getTile().getProperties().containsKey("intersection")){
+					vitesse.x = 0;
+					vitesse.y = vitesseMemorisee.y;
+				}
+
+
+			if((cell = (murs.getCell(((int)position.x ) +1, (int)position.y))) != null)
+				if(cell.getTile().getProperties().containsKey("block"))
+					reactToRightCollision();
+		}
+
+
 
 
 		boundingCircle.set(position.x +largeur/2, position.y +hauteur/2, largeur/2);
 
 	}
 
-	
+
 	/**
 	 * Méthode qui teste la variable vitesse du NamCap est place ainsi
 	 * la rotation de celui-ci.
@@ -113,7 +183,7 @@ public class NamCap {
 	}
 
 
-	
+
 	/**
 	 * Méthode qui fait rentrer le NamCap de l'autre côté de l'écran
 	 * lorsque celui-ci sort. La sortie et l'entrée dans l'écran tiennent
@@ -121,20 +191,21 @@ public class NamCap {
 	 */
 	private void empecheSortie(){
 		// Vérification en X 
-		if(position.x > (AssetLoaderTiled.tiledMapWidth - largeur))
-			position.x = 4; // 4px correspond au bord du NamCap
+		//TODO : Changer la valeur en dur de 32
+		if(position.x > (32 - largeur))
+			position.x = 0;
 		if(position.x < 0)
-			position.x = (AssetLoaderTiled.tiledMapWidth - largeur);
+			position.x = (32 - largeur);
 
 		// Vérification en Y
-		if(position.y > (AssetLoaderTiled.tiledMapHeight - hauteur))
-			position.y = 4; // 4px correspond au bord du NamCap
+		if(position.y > (20 - hauteur))
+			position.y = 0;
 		if(position.y < 0)
-			position.y = (AssetLoaderTiled.tiledMapHeight - hauteur);
+			position.y = (20 - hauteur);
 	}
 
-	
-	
+
+
 	/**
 	 * Liste de méthodes utilisées pour mémoriser la direction du joueur.
 	 * Si le joueur est sur 
@@ -147,8 +218,8 @@ public class NamCap {
 		 * Si non, la vitesse est mémorisée dans le vector2 vitesseMemorisee (laquelle sera
 		 * interprété lors d'une collision). 
 		 */
-		vitesseMemorisee.set(0, 0);		// Initialisation de la vitesseMérmorisée
-		if((position.x)%32 <= 5)
+		vitesseMemorisee.set(0, 0);		// Initialisation de la vitesseMémorisée
+		if((position.x % (int)position.x) == 0)
 			goUp();
 		else {
 			vitesseMemorisee.x = 0;
@@ -157,8 +228,8 @@ public class NamCap {
 	}
 
 	public void wantGoDown(){
-		vitesseMemorisee.set(0, 0);		// Initialisation de la vitesseMérmorisée
-		if((position.x)%32 <= 5)
+		vitesseMemorisee.set(0, 0);		// Initialisation de la vitesseMémorisée
+		if((position.x % (int)position.x) == 0)
 			goDown();
 		else {
 			vitesseMemorisee.x = 0;
@@ -167,8 +238,8 @@ public class NamCap {
 	}
 
 	public void wantGoLeft(){
-		vitesseMemorisee.set(0, 0);		// Initialisation de la vitesseMérmorisée
-		if((position.y)%32 <= 5)
+		vitesseMemorisee.set(0, 0);		// Initialisation de la vitesseMémorisée
+		if((position.y % (int)position.y) == 0)
 			goLeft();
 		else {
 			vitesseMemorisee.x = -vitesseDeplacement;
@@ -177,8 +248,8 @@ public class NamCap {
 	}
 
 	public void wantGoRight(){
-		vitesseMemorisee.set(0, 0);		// Initialisation de la vitesseMérmorisée
-		if((position.y)%32 <= 5)
+		vitesseMemorisee.set(0, 0);		// Initialisation de la vitesseMémorisée
+		if((position.y % (int)position.y) == 0)
 			goRight();
 		else {
 			vitesseMemorisee.x = vitesseDeplacement;
@@ -237,30 +308,34 @@ public class NamCap {
 
 
 	/**
-	 * Liste de méthodes permettant de donner la nouvelle au CamCap
-	 * lors d'une collision.
+	 * Liste de méthodes permettant de donner la nouvelle direction 
+	 * au NamCap lors d'une collision.
 	 */
 	public void reactToUpCollision(){
-		position.y = oldY -FacteurOldPosition;
+		//		position.y = oldY ;
+		position.y = (int)position.y;
 		vitesse.y = 0;
-		
+
 		// Après chaque collision en Y, on attribut la vitesseMémorisée en X.
 		vitesse.x = vitesseMemorisee.x;
 	}
 	public void reactToDownCollision(){
-		position.y = oldY +FacteurOldPosition;
+		//		position.y = oldY ;
+		position.y = (int)position.y +1;
 		vitesse.y = 0;
 		// Après chaque collision en Y, on attribut la vitesseMémorisée en X.
 		vitesse.x = vitesseMemorisee.x;
 	}
 	public void reactToLeftCollision(){
-		position.x = oldX +FacteurOldPosition;
+		//		position.x = oldX ;
+		position.x = (int)position.x +1;
 		vitesse.x = 0;
 		// Après chaque collision en X, on attribut la vitesseMémorisée en Y.
 		vitesse.y = vitesseMemorisee.y;
 	}
 	public void reactToRightCollision(){
-		position.x = oldX -FacteurOldPosition;
+		//		position.x = oldX ;
+		position.x = (int)position.x;
 		vitesse.x = 0;
 		// Après chaque collision en X, on attribut la vitesseMémorisée en Y.
 		vitesse.y = vitesseMemorisee.y;

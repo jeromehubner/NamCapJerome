@@ -20,10 +20,10 @@
  </layer>
  <layer name="tileMurs" width="32" height="20">
   <data encoding="base64" compression="zlib">
-   eJyNlG1qwzAMhktFGeQeY2z3GIPeY4z1HG2T+B5jm6/R5cdyj9I2p5hMLPZGldwYHprE+nolu4vFuLbLMp6NrN3ymo/MnNjewv1SXTsndjcjv9aHea369Ldt1tmpfEcg1bdnaqZhWiYY+XWOW7VpMOaKbJvGsJ2bS5bM2NKU8ibuAW1bym/1WtvtZ85Vg36t0lSqQ9ektUi8pOmZRl4BT78X35tvrWrHvreGfWnuAeJZczjQyA/TkX92tf6Yf4Oyx7wx88l8Md/5HXUfnPOL+qOhv3d8AvhY++iHK91t76z3RvzhRn7s3Yk5M5eCn/ynyNltHDvRVdFUE/ZX678D28rp93FmfunFE8QRTb+wjz17ANvkZ60V3B995iVHn38Ta0fTAMi3F9hfF84bnl+8R8kn5cCYG6Wp1N83mvrJvUD0fIORC2MHQ9MjjbUIsl/zc8O0NPWz7kSv6oiQK8VcZ2KOldgYMb0+R+jj4NArIpVjSn3v9N8vqya89xVdz0q/S509xBXNA001YX+D6vOJn8/MJfulhXOyZob1DIYW65vuszz/AfoAMLY=
+   eJyVVEFug0AMjLByyT96aP/RC//ooXkHSWD/Eandb6Q5dP+RQ3lFsViXwdgLtTRiIbbHY3uz243WVGV4PmKnaolrxlrekqFPqa6Tk//+D36dU/NbNcn7NXMh3wPA9Z0HXAa0A7oBwcijz7r31jdEgPOebJ8WfC3+EpeYzNjSxLyMJ4D2LfFvqem8MlcPGNcV9JesMbRIPtb0SiPeAFv0e5oRF+CSWQpvZ/h7c0d+6z6x3WjE14A7Lees88v3mJ9B+SNvzBD7hHfJd3P2F/VHQ39yYgLEWPc/Od/5bnu7noz8/Qp/MHh+CnHynyK72zp+ousAfeP6Pqqpv5b+xohDPDbySy9eII9o+obfdZ8biLNsD/dH77xwpPxk1GRr6gEWf13YN9xfvEccwxyY80hzTaX+Ij/Hyb1A6PkGgwtzB1pqeqaxFoHev47mcXqmeMY9khjOWWfEnItxNHJ6fY7Qx95BUohUzin1vdPUL6sm7MeBlrPS71Jngryiuae5ppam/gbV57/7n+PYcE7WzLCe3tBifdN9lvMvnSciZw==
   </data>
  </layer>
- <objectgroup color="#ffffff" name="objetMurs" width="32" height="20">
+ <objectgroup color="#ffffff" name="objetMurs" width="32" height="20" visible="0">
   <object x="256" y="32" width="32" height="160"/>
   <object x="192" y="64" width="32" height="96"/>
   <object x="96" y="64" width="32" height="160"/>

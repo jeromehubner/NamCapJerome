@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="32" height="20" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="terrainTileset" tilewidth="32" tileheight="32">
+  <image source="../tilesets/terrainTileset.png" width="1024" height="1024"/>
+  <tile id="639">
+   <properties>
+    <property name="test" value="null"/>
+   </properties>
+  </tile>
+  <tile id="640">
+   <properties>
+    <property name="intersection" value=""/>
+   </properties>
+  </tile>
+  <tile id="643">
+   <properties>
+    <property name="block" value=""/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="tileTerrain" width="32" height="20">
+  <data encoding="base64" compression="zlib">
+   eJwV1YOyGAYAAMEX27Zt27Zt27Zt22xj27adNrbtpNuZ22+4QAEBAYEJQlCCEZwQhCQUoQlDWMIRnghEJBKRiUJUohGdGMQkFrGJQ1ziEZ8EJCQRiUlCUpKRnBSkJBWpSUNa0pGeDGQkE5nJQlaykZ0c5CQXuclDXvKRnwIUpBCFKUJRilGcEpSkFKUpQ1nKUZ4KVKQSlalCVapRnRrUpBa1qUNd6lGfBjSkEY1pQlOa0ZwWtKQVrWlDW9rRng50pBOd6UJXutGdHvSkF73pQ1/60Z8BDGQQgxnCUIYxnBGMZBSjGcNYxjGeCUxkEpOZwlSmMZ0ZzGQWs5nDXOYxnwUsZBGLWcJSlrGcFazkL/5mFatZw1rWsZ4NbGQTm9nCVraxnR3sZBe72cNe9rGfAxzkEIc5wlGOcZwTnOQUpznDWc5xngtc5BKXucJVrnGdG9zkFrf5h3+5w13ucZ8HPOQRj3nCU57xnBe85BWvecNb3vGeD3zkE5/5wle+8Z0f/OQXv/lDQCARmCAEJRjBCUFIQhGaMIQlHOGJQEQiEZkoRCUa0YlBTGIRmzjEJR7xSUBCEpGYJCQlGclJQUpSkZo0pCUd6clARjKRmSxkJRvZyUFOcpGbPOQlH/kpQEEKUZgiFKUYxSlBSUpRmjKUpRzlqUBFKlGZKlSlGtWpQU1qUZs61KUe9WlAQxrRmCY0pRnNaUFLWtGaNrSlHe3pQEc60ZkudKUb3elBT3rRmz70pR/9GcBABjGYIQxlGMMZwUhGMZoxjGUc45nARCYxmSlMZRrTmcFMZjGbOcxlHvNZwEIWsZglLGUZy1nBSv7ib1axmjWsZR3r2cBGNrGZLWxlG9vZwU52sZs97GUf+znAQQ5xmCMc5RjHOcFJTnGaM5zlHOe5wEUucZkrXOUa17nBTW5xm3/4lzvc5R73ecBDHvGYJzzlGc95wUte8Zo3vOUd7/nARz7xmS985Rvf+cFPfvGbP/w//kAEJghBCUZwQhCSUIQmDGEJR3giEJFIRCYKUYlGdGIQk1jEJg5xiUd8EpCQRCQmCUlJRnJSkJJUpCYNaUlHejKQkUxkJgtZyUZ2cpCTXOQmD3nJR34KUJBCFKYIRSlGcUpQklKUpgxlKUd5KlCRSlSmClWpRnVqUJNa1KYOdalHfRrQkEY0pglNaUZzWtCSVrSmDW1pR3s60JFOdKYLXelGd3rQk170pg996Ud/BjCQ/wCLliFS
+  </data>
+ </layer>
+ <layer name="tileMurs" width="32" height="20">
+  <data encoding="base64" compression="zlib">
+   eJydlNEKhTAMQ8Vv98Mv3BdHSU5SB6JsbdLGdM99/ddzv8+51B7Fp3XmtPkqhx7CcPwJa36TLo6X+mp7VlwzlupxeamehOnOqG7iJJ+QLo3OyevOJ1PjrY9VjVsfE07qL2G486T/3Jt5jTdT/80/Tn1tNHJ9nbkzPuE7DVV8+1Z1b2Z6c8c43jQHpE2r/9xPtX2ZSfKs45i5jns726o+x9/E0vnmzlM4hN/MdMJpak61qn36R4qLsB0f+eKLH6jvFvM8/wErooox
+  </data>
+ </layer>
+ <layer name="tileIntersections" width="32" height="20">
+  <data encoding="base64" compression="zlib">
+   eJxjYCAeNDKRoJgCc2F8WtlHCkB2Ay39T6zZ9IgDUtnUtp8a6oYLGEj/0svukRangx0MpvIXBGjtnsGWxwZb+MMAvdxFT3+P9LAGAAgVEWc=
+  </data>
+ </layer>
+</map>

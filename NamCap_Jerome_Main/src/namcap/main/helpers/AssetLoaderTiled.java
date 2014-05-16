@@ -37,6 +37,7 @@ public class AssetLoaderTiled {
 	// TiledMapTileLayer => un calque de tile
 	public static TiledMapTileLayer layerTileTerrain;
 	public static TiledMapTileLayer layerTileMurs;
+	public static TiledMapTileLayer layerTileIntersections;
 
 
 	// MapLayer => calque d'objets
@@ -60,7 +61,7 @@ public class AssetLoaderTiled {
 	public static void load() {
 
 		// On récupère le fichier .tmx
-		tiledMap = new TmxMapLoader().load("images/terrain_foot.tmx");
+		tiledMap = new TmxMapLoader().load("images/terrain_foot3.tmx");
 		
 		// On récupère les largeur et hauteur du tilemap
 		tiledMapWidth = ((int)tiledMap.getProperties().get("tilewidth")) *	// Largeur d'un tile
@@ -76,6 +77,7 @@ public class AssetLoaderTiled {
 		/*------- Calques de tiles -------*/
 		layerTileTerrain = (TiledMapTileLayer) mapLayers.get("tileTerrain");
 		layerTileMurs = (TiledMapTileLayer) mapLayers.get("tileMurs");
+		layerTileIntersections = (TiledMapTileLayer) mapLayers.get("tileIntersections");
 		/*--------------------------------*/
 
 

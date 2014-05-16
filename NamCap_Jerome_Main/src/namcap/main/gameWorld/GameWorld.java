@@ -2,16 +2,7 @@ package namcap.main.gameWorld;
 
 import namcap.main.gameObject.Mur;
 import namcap.main.gameObject.NamCap;
-import namcap.main.helpers.AssetLoaderTiled;
 
-import com.badlogic.gdx.maps.MapLayer;
-import com.badlogic.gdx.maps.MapLayers;
-import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.MapObjects;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
-import com.badlogic.gdx.math.Intersector;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.badlogic.gdx.utils.Array;
 
 
@@ -30,20 +21,22 @@ public class GameWorld {
 
 
 	public GameWorld() {
-		MapObjects mapObjects = AssetLoaderTiled.layerObjetMurs.getObjects();
+//		MapObjects mapObjects = AssetLoaderTiled.layerObjetMurs.getObjects();
+//
+//
+//		RectangleMapObject rectangleMapObject;
+//		
+//		murs = new Array<Mur>();
+//
+//		for(MapObject m : mapObjects){
+//			rectangleMapObject = (RectangleMapObject)m;
+//
+//			murs.add(new Mur(rectangleMapObject.getRectangle()));
+//		}
 
-
-		RectangleMapObject rectangleMapObject;
+//		namCap = new NamCap(4, 4, 24, 24);
 		
-		murs = new Array<Mur>();
-
-		for(MapObject m : mapObjects){
-			rectangleMapObject = (RectangleMapObject)m;
-
-			murs.add(new Mur(rectangleMapObject.getRectangle()));
-		}
-
-		namCap = new NamCap(4, 4, 24, 24);
+		namCap = new NamCap(1, 1, 1, 1);
 	}
 
 
@@ -65,8 +58,9 @@ public class GameWorld {
 		namCap.update(delta);
 		
 		
-		for(Mur m : murs)
-			m.testCollision(namCap);
+		
+//		for(Mur m : murs)
+//			m.testCollision(namCap);
 	}
 
 

@@ -45,7 +45,7 @@ public class GameRendererTiled {
 		
 		
 		// unitScale => le nbre de pixels d'un tile (32x32)
-		float unitScale = 1f;
+		float unitScale = 1/32f;
 		
 		orthogonalTiledMapRenderer = new OrthogonalTiledMapRenderer(AssetLoaderTiled.tiledMap, unitScale);
 		orthographicCamera = new OrthographicCamera();
@@ -55,7 +55,8 @@ public class GameRendererTiled {
 		 * On place les valeurs de la camera avec les dimensions du tiledMap pour
 		 * afficher tout le terrain à l'écran
 		 */		
-		orthographicCamera.setToOrtho(false, AssetLoaderTiled.tiledMapWidth, AssetLoaderTiled.tiledMapHeight);
+//		orthographicCamera.setToOrtho(false, AssetLoaderTiled.tiledMapWidth, AssetLoaderTiled.tiledMapHeight);
+		orthographicCamera.setToOrtho(false, 32, 20);
 		
 		
 		// On renseigne la camera au orthogonalTiledMapRenderer 
