@@ -3,70 +3,58 @@ package namcap.main.helpers;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
+
 public class AssetLoader {
+	public static TextureRegion platform;
+	public static TextureRegion fallingManSplash;
+	public static Animation fallingManAnim;
+	public static Texture chargementTexture;
+	public static Texture backgroundTexture;
+	public static Texture fond1Texture;
+	public static Texture fond2Texture;
+	public static Texture fond3Texture;
+	public static Texture fond4Texture;
+	public static Texture fond5Texture;
+	public static Texture planTexture;
+	public static Texture plan2Texture;
+	public static Texture plan3Texture;
+	public static Texture plan4Texture;
 
-	/*
-	 * Sans l'utilisation de Tiled, on utilise une texture.
-	 * Cette texture est un set de plusieurs images regroupant différentes
-	 * plus petites images (TextureRegion).
-	 */
-	public static Texture texture;
-	
-	
-	/*
-	 * Ces TextureRegion peuvent par exemple être assimilées à la série
-	 * d'images composant une Animation.
-	 */
-	public static TextureRegion namCapRight0, namCapRight1, namCapRight2, backGround, murRegion;
-	
-	
-	/*
-	 * Une Animation est créée par un tableau de TextureRegion.
-	 * Il faut lui définir un PlayMode (ex : animation.setPlayMode(Animation.LOOP_PINGPONG).
-	 */
-	public static Animation namCapAnimation;
-	
-	
-	public static void load() {
 
-		texture = new Texture(Gdx.files.internal("images/texture.png"));
-		/*
-		 * Les coordonnées des TextureRegion sont celles contenues dans 
-		 * le fichier texture ("texture.png").
-		 * On a ensuite les hauteur et largeur de la TextureRegion.
-		 */
-		backGround = new TextureRegion(texture, 0,0, 1023, 640);
-		
-		
-		namCapRight0 = new TextureRegion(texture, 0, 641, 128, 128);
-		// Cette méthode .flip() crée un miroir vertical ou horizontal ou les 2
-		// de la TextureRegion
-		namCapRight0.flip(false, true);
-		namCapRight1 = new TextureRegion(texture, 128, 641, 128, 128);
-		namCapRight1.flip(false, true);
-		namCapRight2 = new TextureRegion(texture, 256, 641, 128, 128);
-		namCapRight2.flip(false, true);
-		
-		/*
-		 * On crée un tableau de textureRegion pour générer l'animation
-		 */
-		TextureRegion[] namCapRights = {namCapRight0, namCapRight1, namCapRight2};
-		
-		/*
-		 * L'animation est créée avec le tableau de textureRegion.
-		 * 0.1 est la durée d'une frame.
-		 */
-		namCapAnimation = new Animation(0.1f, namCapRights);
-		namCapAnimation.setPlayMode(Animation.LOOP_PINGPONG);
-		
-		
-		murRegion = new TextureRegion(texture, 384, 641, 128, 128);
-		
+	public static void load () {
+
+		TextureAtlas textureAtlas = new TextureAtlas("data/PigTest.pack");
+		fallingManAnim = new Animation(0.2f, textureAtlas.findRegion("falling1"), textureAtlas.findRegion("falling2"));
+		platform = textureAtlas.findRegion("platform");
+		fallingManSplash = textureAtlas.findRegion("rip");
+		chargementTexture = new Texture(Gdx.files.internal("data/chargement.png"));
+		backgroundTexture = new Texture(Gdx.files.internal("data/back.png"));
+		fond1Texture = new Texture(Gdx.files.internal("data/fond1.png"));
+		fond2Texture = new Texture(Gdx.files.internal("data/fond2.png"));
+		fond3Texture = new Texture(Gdx.files.internal("data/fond3.png"));
+		fond4Texture = new Texture(Gdx.files.internal("data/fond4.png"));
+		fond5Texture = new Texture(Gdx.files.internal("data/fond5.png"));
+		planTexture = new Texture(Gdx.files.internal("data/plan.png"));
+		plan2Texture = new Texture(Gdx.files.internal("data/plan2.png"));
+		plan3Texture = new Texture(Gdx.files.internal("data/plan3.png"));
+		plan4Texture = new Texture(Gdx.files.internal("data/plan4.png"));
+
 	}
 
 	public static void dispose(){
-		texture.dispose();
+		chargementTexture.dispose();
+		backgroundTexture.dispose();
+		fond1Texture.dispose();
+		fond2Texture.dispose();
+		fond3Texture.dispose();
+		fond4Texture.dispose();
+		fond5Texture.dispose();
+		planTexture.dispose();
+		plan2Texture.dispose();
+		plan3Texture.dispose();
+		plan4Texture.dispose();
 	}
 }

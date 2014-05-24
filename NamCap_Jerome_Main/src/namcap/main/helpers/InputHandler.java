@@ -29,6 +29,7 @@ public class InputHandler implements InputProcessor {
 	
 	// Cette variable doit être comprise entre 0 et 10.
 	private float sensibiliteAccelerometre = 3;
+	private float sensibiliteTactile = 60;
 	/*------------------------------------------------*/
 
 
@@ -54,19 +55,19 @@ public class InputHandler implements InputProcessor {
 		switch(keycode)
 		{
 		case Input.Keys.UP:
-			namCap.wantGoUp();
+			namCap.memorizeGoUp();
 			break;
 			
 		case Input.Keys.DOWN:
-			namCap.wantGoDown();
+			namCap.memorizeGoDown();
 			break;
 			
 		case Input.Keys.LEFT:
-			namCap.wantGoLeft();
+			namCap.memorizeGoLeft();
 			break;
 
 		case Input.Keys.RIGHT:
-			namCap.wantGoRight();
+			namCap.memorizeGoRight();
 			break;
 			
 		case Input.Keys.SPACE:
@@ -119,20 +120,24 @@ public class InputHandler implements InputProcessor {
 		int deltaY = screenY - this.touchDownY;
 
 		// Mouvement en X
-		if (deltaY < -100) {
-			namCap.wantGoUp();
+		if (deltaY < -sensibiliteTactile) {
+			namCap.memorizeGoUp();
 		}
-		else if (deltaY > 100) {
-			namCap.wantGoDown();
+		else if (deltaY > sensibiliteTactile) {
+			namCap.memorizeGoDown();
 		}
 		
 		// Mouvement en Y
-		if (deltaX < -100) {
-			namCap.wantGoLeft();
+		if (deltaX < -sensibiliteTactile) {
+			namCap.memorizeGoLeft();
 		}
-		else if (deltaX > 100) {
-			namCap.wantGoRight();
+		else if (deltaX > sensibiliteTactile) {
+			namCap.memorizeGoRight();
 		}
+		
+		// Pause (le toucher doit être < 10% du déplacement tactile)
+//		if (deltaX < (sensibiliteTactile/10) && deltaY < (sensibiliteTactile/10))
+//			namCap.stop();
 		
 		return true;
 	}
@@ -169,16 +174,16 @@ public class InputHandler implements InputProcessor {
 		// Les inclinaisons CI-DESSOUS tiennent compte du mode paysage du jeu.
 
 		if(Gdx.input.getAccelerometerX()<-sensibiliteAccelerometre)	// Inclinaison au dela de soi
-			namCap.wantGoUp();
+			namCap.memorizeGoUp();
 		
 		else if(Gdx.input.getAccelerometerX()>sensibiliteAccelerometre)		// Inclinaison vers soi
-			namCap.wantGoDown();
+			namCap.memorizeGoDown();
 		
 		else if (Gdx.input.getAccelerometerY()<-sensibiliteAccelerometre)	// Inclinaison vers la gauche
-			namCap.wantGoLeft();
+			namCap.memorizeGoLeft();
 		
 		else if(Gdx.input.getAccelerometerY()>sensibiliteAccelerometre)	// Inclinaison vers la droite
-			namCap.wantGoRight();
+			namCap.memorizeGoRight();
 		
 		return true;
 	}

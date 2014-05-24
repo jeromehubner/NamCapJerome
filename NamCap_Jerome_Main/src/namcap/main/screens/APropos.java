@@ -1,7 +1,7 @@
 package namcap.main.screens;
 
 import namcap.main.MainGame;
-import namcap.main.helpers.Assets;
+import namcap.main.helpers.AssetLoader;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -51,7 +51,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 		Gdx.input.setCatchMenuKey(true);
 		
 		
-		Image plan2Image = new Image(Assets.plan2Texture);
+		Image plan2Image = new Image(AssetLoader.plan2Texture);
 		plan2Image.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		
 		

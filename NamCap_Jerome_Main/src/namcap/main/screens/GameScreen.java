@@ -1,6 +1,6 @@
 package namcap.main.screens;
 
-import namcap.main.gameWorld.GameRendererTiled;
+import namcap.main.gameWorld.GameRenderer;
 import namcap.main.gameWorld.GameWorld;
 import namcap.main.helpers.InputHandler;
 
@@ -14,13 +14,13 @@ import com.badlogic.gdx.Screen;
  */
 public class GameScreen implements Screen {
 	private GameWorld gameWorld;
-	private GameRendererTiled gameRendererTiled;
+	private GameRenderer gameRenderer;
 	
 	/*
 	 * Cette valeur sera utilsée dans la méthode render(float runTime)
 	 * de la classe GameRenderer.
 	 */
-	private float runTime;
+	public static float runTime;
 	
 	/*------------------------------------*/
 	/*------- PARAMETRE MODIFIABLE -------*/
@@ -38,11 +38,10 @@ public class GameScreen implements Screen {
 	private InputHandler inputHandler;
 	
 	
-	
 	public GameScreen() {
 		
 		gameWorld = new GameWorld();
-		gameRendererTiled = new GameRendererTiled(gameWorld);
+		gameRenderer = new GameRenderer(gameWorld);
 		
 		inputHandler = new InputHandler(gameWorld.getNamCap());
 		
@@ -89,16 +88,16 @@ public class GameScreen implements Screen {
 		
 		/*-------------------------------------------*/
 		/*------- Mise à jour du rendu du jeu -------*/
-		gameRendererTiled.render(runTime);
+		gameRenderer.render(runTime);
 		/*-------------------------------------------*/
+		
 	}
 
 	// Appelé 2x de suite après la méthode show()
 	// Appelé après avoir mis le jeu en pause
 	@Override
 	public void resize(int width, int height) {
-		System.out.println("GameScreen - resizing");
-		
+		System.out.println("GameScreen - resizing");		
 	}
 	
 	@Override

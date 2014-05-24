@@ -2,7 +2,7 @@ package namcap.main.screens;
 
 
 import namcap.main.MainGame;
-import namcap.main.helpers.Assets;
+import namcap.main.helpers.AssetLoader;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -71,7 +71,7 @@ public class MainMenuScreen implements Screen {
 		
 //		Table table = new Table(Assets.skin);
 		
-		Image backImage = new Image(Assets.backgroundTexture);
+		Image backImage = new Image(AssetLoader.backgroundTexture);
 		backImage.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 	
 		

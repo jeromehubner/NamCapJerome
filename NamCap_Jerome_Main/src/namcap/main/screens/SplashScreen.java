@@ -2,7 +2,7 @@ package namcap.main.screens;
 
 
 import namcap.main.MainGame;
-import namcap.main.helpers.Assets;
+import namcap.main.helpers.AssetLoader;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -48,7 +48,7 @@ public class SplashScreen implements Screen {
 
 		Gdx.input.setInputProcessor(stage);
 		
-		Image splashImage = new Image(Assets.chargementTexture);
+		Image splashImage = new Image(AssetLoader.chargementTexture);
 		splashImage.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 //		splashImage.addAction(Actions.fadeIn( 2f ));
 		splashImage.addAction( Actions.sequence( Actions.fadeOut( 0.001f ), Actions.fadeIn(dureeSplashScreen), Actions.run(onSplashFinishedRunnable) ) );

@@ -1,7 +1,7 @@
 package namcap.main.screens;
 
 import namcap.main.MainGame;
-import namcap.main.helpers.Assets;
+import namcap.main.helpers.AssetLoader;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -55,14 +55,24 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 	    Gdx.input.setCatchMenuKey(true);
 		
 	 
-	    Image backImage = new Image(Assets.fond2Texture);
+	    Image backImage = new Image(AssetLoader.fond2Texture);
 		backImage.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		
 		niveau1Button = new Image(new Texture("data/niveau1.png"));
 //		choixButton.setPosition(30, 1500);
 		niveau1Button.setPosition ( largeurscreen * 1/20.0f , hauteurscreen * 6/9.0f + 5* margebouton);
 		niveau1Button.setSize(largeurscreen * 18/20 , hauteurscreen * 1/6);
-		
+		niveau1Button.addListener(new InputListener(){
+
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y,
+					int pointer, int button) {
+
+				game.setScreen((Screen) new GameScreen());
+				
+				return true;
+			}
+		});
 		
 		niveau2Button = new Image(new Texture("data/niveau2.png"));
 //		classiqueButton.setPosition(30, 1200);
