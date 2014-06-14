@@ -2,10 +2,13 @@ package namcap.main.gameWorld;
 
 import namcap.main.gameObject.Fantome;
 import namcap.main.gameObject.NamCap;
+import namcap.main.gameObject.ObjectPositions;
 import namcap.main.gameObject.Points;
+import namcap.main.gameObject.Surprise;
 import namcap.main.helpers.AssetLoaderMap;
 
 import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.Vector2;
 
 
 /**
@@ -25,22 +28,30 @@ public class GameWorld {
 	private Fantome fantome3;
 	
 	private Points points;
+	private Surprise surprise;
+	
+	private ObjectPositions objectPositions;
 
 
 	public GameWorld() {
-
-		namCap = new NamCap(2, 1, 1, 1);
-
-		fantome1 = new Fantome(7, 2, 1, 1);
-		fantome2 = new Fantome(1, 27, 1, 1);
-		fantome3 = new Fantome(10, 12, 1, 1);
+		
+		objectPositions = new ObjectPositions(AssetLoaderMap.layerObjectPositions);
+		
+		
+		namCap = new NamCap(objectPositions.getNamCapStartPosition());
+		
+		fantome1 = new Fantome(objectPositions.getFantomeStartPosition());
+		fantome2 = new Fantome(objectPositions.getFantomeStartPosition());
+		fantome3 = new Fantome(objectPositions.getFantomeStartPosition());
+		
+		surprise = new Surprise(objectPositions.getSurprisePosition());
 		
 		/*
 		 * On envoie le layerObjectPoints à la classe Points qui initialisera 
 		 * une hashMap contenant les points et leurs positions.
-		 */ 
+		 */
+		//TODO : Peut-être à déplacer
 		points = new Points(AssetLoaderMap.layerObjectPoints.getObjects());
-		
 	}
 
 
@@ -78,8 +89,6 @@ public class GameWorld {
 		}
 		
 		points.collision(namCap);
-		
-//		points.collision(fantome2);
 	}
 
 
@@ -101,5 +110,9 @@ public class GameWorld {
 
 	public Points getPoints() {
 		return points;
+	}
+
+	public Surprise getSurprise() {
+		return surprise;
 	}
 }

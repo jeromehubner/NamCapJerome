@@ -18,7 +18,7 @@ public class Points {
 	public Points(MapObjects mapObjects) {
 
 		hashMapPoints = new HashMap<>(mapObjects.getCount());
-
+		
 		Rectangle boundingMapObject;
 		Vector2 positionObject;
 
@@ -40,17 +40,23 @@ public class Points {
 	 * @return true si le NamCap est en collision avec un des points.
 	 */
 	public void collision(NamCap namCap){
-		Vector2 position = new Vector2(Math.round(namCap.getPosition().x), Math.round(namCap.getPosition().y));
+		
+		/*
+		 * La position du NamCap est arrondie à l'entier le plus proche
+		 * pour récupérer la cellule du NamCap et vérifier s'il elle contient
+		 * un point.
+		 */
+		Vector2 positionDuNamCap = new Vector2(Math.round(namCap.getPosition().x), Math.round(namCap.getPosition().y));
 
 		
-		if(hashMapPoints.containsKey(position)){
+		if(hashMapPoints.containsKey(positionDuNamCap)){
 			
-			Point point = hashMapPoints.get(position);
+			Point point = hashMapPoints.get(positionDuNamCap);
 			
 			if(namCap.getBoundingCircle().overlaps(
 					point.getBoundingCircle())){
 
-				hashMapPoints.remove(position);
+				hashMapPoints.remove(positionDuNamCap);
 				
 				namCap.setScore(namCap.getScore() + point.getValeur());
 			}

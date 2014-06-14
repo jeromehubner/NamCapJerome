@@ -47,10 +47,10 @@ public class GameScreen implements Screen {
 		
 		/*
 		 * Si l'utilisateur a choisi l'accéléromètre,
-		 * on ne renseigne pas le InputProcessor à la crétaion du GameScreen.
+		 * on ne renseigne pas le InputProcessor à la création du GameScreen.
 		 */
 		if(!useAccelerometre)
-			Gdx.input.setInputProcessor(inputHandler);
+			Gdx.input.setInputProcessor(inputHandler);		
 		
 		
 		System.out.println("GameScreen Attached");
@@ -89,8 +89,8 @@ public class GameScreen implements Screen {
 		/*-------------------------------------------*/
 		/*------- Mise à jour du rendu du jeu -------*/
 		gameRenderer.render(runTime);
+		System.out.println(runTime);
 		/*-------------------------------------------*/
-		
 	}
 
 	// Appelé 2x de suite après la méthode show()

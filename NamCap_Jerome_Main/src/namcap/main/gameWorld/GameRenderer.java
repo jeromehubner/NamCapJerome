@@ -4,15 +4,21 @@ import namcap.main.gameObject.Fantome;
 import namcap.main.gameObject.NamCap;
 import namcap.main.gameObject.Point;
 import namcap.main.gameObject.Points;
+import namcap.main.gameObject.Surprise;
 import namcap.main.helpers.AssetLoaderMap;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
 public class GameRenderer {	
 	
@@ -34,17 +40,26 @@ public class GameRenderer {
 	private Fantome fantome3;
 	
 	private Points pointObjects;
+	private Surprise surpriseObject;
 	//--------------------------//
+	
 	
 	//------- GameAssets -------//
 	private Animation namCapAnimation;
 	private Animation fantomeAnimation;
+	private Animation surpriseAnimation;	
+	
 	private TextureRegion point;
-//	private Animation pointAnimation;
 	
 	private TiledMapTileLayer tileBackGround, tileMurs, tilePonts;
-//	tilePoints;
 	//--------------------------//
+	
+	
+	//------- GameInfos -------//
+	private Table table;
+	private Label timeLabel, scoreLabel;
+	private Skin mySkin = new Skin(Gdx.files.internal("ui/mySkin.json"));
+	//-------------------------//
 	
 	
 	/*------- Dimensions de l'écran -------*/
@@ -58,9 +73,9 @@ public class GameRenderer {
 	/*---------------------------------------------------*/
 	
 	
+	
 	public GameRenderer(GameWorld gameWorld) {
 		this.gameWorld = gameWorld;
-		
 
 		unitScale = 1/32f;	// => 0 < position.x < 20 et 0 < position.y < 32
 		
@@ -78,10 +93,10 @@ public class GameRenderer {
 		// On renseigne la camera au orthogonalTiledMapRenderer 
 		orthogonalTiledMapRenderer.setView(orthographicCamera);
 		
-				
-		// Initialisation des variables
+		
 		initAssets();
 		initGameObjects();
+		initGameInfos();		
 	}
 	
 	
@@ -91,10 +106,13 @@ public class GameRenderer {
 	 */
 	private void initGameObjects(){
 		namCap = gameWorld.getNamCap();
+		
 		fantome1 = gameWorld.getFantome1();
 		fantome2 = gameWorld.getFantome2();
 		fantome3 = gameWorld.getFantome3();
+		
 		pointObjects = gameWorld.getPoints();
+		surpriseObject = gameWorld.getSurprise();
 	}
 	
 
@@ -104,14 +122,35 @@ public class GameRenderer {
 	private void initAssets(){
 		tileBackGround = AssetLoaderMap.layerBackground;
 		tileMurs = AssetLoaderMap.layerMurs;
-		tilePonts = AssetLoaderMap.layerPonts;
-//		tilePoints = AssetLoaderMap.layerPoints;
-		
+		tilePonts = AssetLoaderMap.layerPonts;		
 		
 		namCapAnimation = AssetLoaderMap.namCapAnimation;
 		fantomeAnimation = AssetLoaderMap.fantomeAnimation;
-//		pointAnimation = AssetLoaderMap.pointAnimation;
+		surpriseAnimation = AssetLoaderMap.surpriseAnimation;
+		
 		point = AssetLoaderMap.point;
+	}
+
+	
+	private void initGameInfos(){
+		//TODO : à corriger
+//		table = new Table(mySkin);
+//		table.setPosition(100, 700);
+		
+		
+		timeLabel = new Label("", mySkin);
+//		table.add(timeLabel);
+		timeLabel.setPosition(10, Gdx.graphics.getHeight()-timeLabel.getHeight());
+		timeLabel.setY(Gdx.graphics.getHeight()-timeLabel.getHeight()-30);
+//		timeLabel.setX(100);
+//		timeLabel.setY(100);
+		
+		
+		scoreLabel = new Label("", mySkin);
+//		table.add(scoreLabel);		
+		
+		scoreLabel.setX(200);
+		scoreLabel.setY(Gdx.graphics.getHeight()-scoreLabel.getHeight()-30);
 	}
 	
 	
@@ -179,26 +218,46 @@ public class GameRenderer {
 		orthogonalTiledMapRenderer.renderTileLayer(tilePonts);
 	}
 	
+	
 	private void drawPoints(){
-//		orthogonalTiledMapRenderer.renderTileLayer(tilePoints);
-//		
-//		for(Point p : pointObjects.getHashMapPoints().values()){
-//			orthogonalTiledMapRenderer.getSpriteBatch().draw(
-//					pointAnimation.getKeyFrame(runTime),
-//					p.getPosition().x, p.getPosition().y,
-//					p.getLargeur() /2.0f, p.getHauteur()/2.0f,
-//					p.getLargeur(), p.getHauteur(), 
-//					1,1,
-//					0);
-//		}	
-		
 		for(Point p : pointObjects.getHashMapPoints().values())
 			orthogonalTiledMapRenderer.getSpriteBatch().draw(
 					point, p.getPosition().x, p.getPosition().y, p.getLargeur(), p.getHauteur());
-		
 	}
 	
 	
+	private void drawSurprises(float runTime){
+		orthogonalTiledMapRenderer.getSpriteBatch().draw(
+				surpriseAnimation.getKeyFrame(runTime),
+				surpriseObject.getPosition().x, surpriseObject.getPosition().y,
+				surpriseObject.getLargeur() /2.0f, surpriseObject.getHauteur()/2.0f,
+				surpriseObject.getLargeur(), surpriseObject.getHauteur(), 
+				1,1,180);
+	}
+	
+	/**
+	 * Mise à jour des infos de jeu (score, time, lifes...)
+	 * @param runTime
+	 */
+	private void drawInfos(float runTime){
+
+		scoreLabel.setText("Score :"+ String.valueOf(gameWorld.getNamCap().getScore()));
+
+		timeLabel.setText("Time : "+String.valueOf((int)(runTime*10)/10f));
+		
+		SpriteBatch batch = orthogonalTiledMapRenderer.getSpriteBatch();
+		
+//		batch.begin();
+		
+		timeLabel.draw(batch, 0);
+		scoreLabel.draw(batch, 0);
+		
+//		table.draw(batch, 1);
+
+//		batch.end();
+		/*--------------------------------------------------------------------*/
+		
+	}
 	/**
 	 * Cette méthode met à jour le rendu du jeu.
 	 * Elle commence par dessiner un fond noir (en utilisant le shapeRenderer)
@@ -236,9 +295,9 @@ public class GameRenderer {
 		orthogonalTiledMapRenderer.getSpriteBatch().begin();
 		
 		
-		
 		/*
 		 * 1. Dessin du Background
+		 * Cette méthode pourrait être remplacée par : orthogonalTiledMapRenderer.render();
 		 */
 		drawBackGround();
 		
@@ -249,29 +308,42 @@ public class GameRenderer {
 		drawMurs();
 		
 		
-		
+		/*
+		 * 3. Dessin des points
+		 */
 		drawPoints();
 		
 		
 		/*
-		 * 3. Dessin du NamCap
+		 * 4. Dessin du NamCap
 		 */
 		drawNamCap(runTime);
 		
 		
+		/*
+		 * 6. Dessin des fantômes
+		 */
 		drawFantomes(runTime);
 		
 		
+		/*
+		 * 7. Dessin des ponts à la fin pour passer derrière
+		 */
 		drawponts();
 		
 		
+		/*
+		 * 8. Dessin des surprises
+		 */
+		drawSurprises(runTime);
+		
+		
+		/*
+		 * 9. Dessin des informations du jeu
+		 */
+		drawInfos(runTime);
+		
 		//------- SpriteBatch END -------//
 		orthogonalTiledMapRenderer.getSpriteBatch().end();
-
-		/*
-		 * La méthode drawBackGround() pourrait être remplacée par :
-		 * 
-		 * orthogonalTiledMapRenderer.render();
-		 */
 	}
 }

@@ -1,6 +1,7 @@
 package namcap.main.screens;
 
 import namcap.main.MainGame;
+import namcap.main.helpers.AssetLoaderMap;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;

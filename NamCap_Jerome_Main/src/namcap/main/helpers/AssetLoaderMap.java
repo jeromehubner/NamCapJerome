@@ -17,9 +17,12 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
  *
  */
 public class AssetLoaderMap {
+	
 	// Permet de récupérer le fichier .tmx
 	public static TiledMap tiledMap;
 
+	
+	//TODO : Peut-être à déplacer dans une autre classe ???
 	/*
 	 * Variables utilisées pour placer la camera du renderer
 	 * et pour empêcher la sortie du NamCap
@@ -30,8 +33,20 @@ public class AssetLoaderMap {
 
 	// MapLayers => tableau de tous les calques du fichier .tmx
 	public static MapLayers mapLayers;
+	
+	
+	// TiledMapTileSets => tableau de tous les tileSets du fichier .tmx
+	public static TiledMapTileSets tiledMapTileSets;
+	
+	
+	// TiledMapTileSet => un tileSet
+	public static TiledMapTileSet tiledMapTileSet;
+	
 
-
+	// Les TextureRegion permettent de récupérer une image non animée
+	public static TextureRegion point;
+	
+	
 	// TiledMapTileLayer => un calque de tile
 	public static TiledMapTileLayer layerBackground;
 	public static TiledMapTileLayer layerMurs;
@@ -41,35 +56,32 @@ public class AssetLoaderMap {
 
 	// MapLayer => calque d'objets
 	public static MapLayer layerObjectPoints;
-	public static TextureRegion point;
+//	public static MapLayer layerObjectSurprises;
+	public static MapLayer layerObjectPositions;
 
 
-	// TiledMapTileSets => tableau de tous les tileSets du fichier .tmx
-	public static TiledMapTileSets tiledMapTileSets;
-
-	// TiledMapTileSet => un tileSet
-	public static TiledMapTileSet tiledMapTileSet;
-
-
-	/*------- Création du NamCap animé -------*/
+	/*------- Animation du NamCap -------*/
 	public static Animation namCapAnimation;
 
-	/*------- Création du Fantome animé -------*/
-	public static Animation fantomeAnimation;
 	
-	/*------- Création du point animé -------*/
-//	public static Animation pointAnimation;
+	/*------- Animation des Fantomes -------*/
+	public static Animation fantomeAnimation;
+
+	
+	/*------- Animation des Surprises -------*/
+	public static Animation surpriseAnimation;
 
 
 	public static void load() {
 		// On récupère le fichier .tmx
-		tiledMap = new TmxMapLoader().load("tmxFiles/sportTheme/foot.tmx");
+		tiledMap = new TmxMapLoader().load("tmxFiles/sportTheme/1_foot.tmx");
 
+		
 		// On récupère les largeur et hauteur du tilemap
 		tiledMapWidth = ((int)tiledMap.getProperties().get("width"));	// Nombre de tiles (en largeur)
-
 		tiledMapHeight=((int)tiledMap.getProperties().get("height"));	// Nombre de tiles (en hauteur)
 
+		
 		// On instancie les calques de tiles et d'objets contenus dans le mapLayers
 		mapLayers = tiledMap.getLayers();
 
@@ -79,24 +91,31 @@ public class AssetLoaderMap {
 		layerMurs = (TiledMapTileLayer) mapLayers.get("layerMurs");
 		layerIntersections = (TiledMapTileLayer) mapLayers.get("layerIntersections");
 		layerPonts = (TiledMapTileLayer) mapLayers.get("layerPonts");
-//		layerPoints = (TiledMapTileLayer) mapLayers.get("layerPoints");
-
 		
 
 		/*------- Calques d'objets-------*/
 		layerObjectPoints = mapLayers.get("layerObjectPoints");
+//		layerObjectSurprises = mapLayers.get("layerObjectSurprises");
+		layerObjectPositions = mapLayers.get("layerObjectPositions");
 		/*--------------------------------*/
 
 
+		/*------- TextureRegion -------*/
+		point = tiledMap.getTileSets().getTileSet("foot").getTile(643).getTextureRegion();
+		/*-----------------------------*/
+		
+		
+		/*------- load Animations -------*/
 		loadNamCapAnimation();
 		loadFantomeAnimation();
-		loadPointAnimation();
+		loadSurpriseAnimation();
+		/*-------------------------------*/
 	}
+	
 
 	private static void loadNamCapAnimation(){
 		TextureRegion namCap0 = tiledMap.getTileSets().getTileSet("foot").getTile(641).getTextureRegion();
-		// Cette méthode .flip() crée un miroir vertical ou horizontal ou les 2
-		// de la TextureRegion
+		// Cette méthode .flip() crée un miroir vertical ou horizontal ou les 2 de la TextureRegion
 		namCap0.flip(false, true);
 
 		TextureRegion namCap1 = tiledMap.getTileSets().getTileSet("foot").getTile(661).getTextureRegion();
@@ -118,6 +137,7 @@ public class AssetLoaderMap {
 		namCapAnimation.setPlayMode(Animation.LOOP_PINGPONG);
 	}
 
+	
 	private static void loadFantomeAnimation(){
 		TextureRegion fantome0 = tiledMap.getTileSets().getTileSet("foot").getTile(642).getTextureRegion();
 		fantome0.flip(false, true);
@@ -141,30 +161,48 @@ public class AssetLoaderMap {
 		fantomeAnimation.setPlayMode(Animation.LOOP_PINGPONG);
 	}
 	
-	private static void loadPointAnimation(){
-//		TextureRegion point0 = tiledMap.getTileSets().getTileSet("foot").getTile(643).getTextureRegion();
-//		point0.flip(false, true);
-//
-//		TextureRegion point1 = tiledMap.getTileSets().getTileSet("foot").getTile(663).getTextureRegion();
-//		point1.flip(false, true);
-//		
-//		/*
-//		 * On crée un tableau de textureRegion pour générer l'animation
-//		 */
-//		TextureRegion[] point01 = {point0, point1};
-//
-//		/*
-//		 * L'animation est créée avec le tableau de textureRegion.
-//		 * 0.1 est la durée d'une frame.
-//		 */
-//		pointAnimation = new Animation(0.2f, point01);
-//		pointAnimation.setPlayMode(Animation.LOOP_PINGPONG);
-//		/*--------------------------------*/
-		
-		point = tiledMap.getTileSets().getTileSet("foot").getTile(663).getTextureRegion();
-		
-	}
+	
+	private static void loadSurpriseAnimation(){
+		TextureRegion surprise0 = tiledMap.getTileSets().getTileSet("foot").getTile(647).getTextureRegion();
+		surprise0.flip(false, true);
 
+		TextureRegion surprise1 = tiledMap.getTileSets().getTileSet("foot").getTile(667).getTextureRegion();
+		surprise1.flip(false, true);
+
+		TextureRegion surprise2 = tiledMap.getTileSets().getTileSet("foot").getTile(687).getTextureRegion();
+		surprise2.flip(false, true);
+
+		TextureRegion surprise3 = tiledMap.getTileSets().getTileSet("foot").getTile(707).getTextureRegion();
+		surprise3.flip(false, true);
+
+		TextureRegion surprise4 = tiledMap.getTileSets().getTileSet("foot").getTile(727).getTextureRegion();
+		surprise4.flip(false, true);
+
+		TextureRegion surprise5 = tiledMap.getTileSets().getTileSet("foot").getTile(747).getTextureRegion();
+		surprise5.flip(false, true);
+		
+		TextureRegion surprise6 = tiledMap.getTileSets().getTileSet("foot").getTile(767).getTextureRegion();
+		surprise6.flip(false, true);
+
+		TextureRegion surprise7 = tiledMap.getTileSets().getTileSet("foot").getTile(787).getTextureRegion();
+		surprise7.flip(false, true);
+		
+		TextureRegion surprise8 = tiledMap.getTileSets().getTileSet("foot").getTile(807).getTextureRegion();
+		surprise8.flip(false, true);
+		
+		
+		/*
+		 * On crée un tableau de textureRegion pour générer l'animation
+		 */
+		TextureRegion[] surprise012345678 = {surprise0, surprise1, surprise2, surprise3, surprise4, surprise5, surprise6, surprise7, surprise8};
+
+		/*
+		 * L'animation est créée avec le tableau de textureRegion.
+		 * 0.1 est la durée d'une frame.
+		 */
+		surpriseAnimation = new Animation(0.1f, surprise012345678);
+		surpriseAnimation.setPlayMode(Animation.LOOP_PINGPONG);
+	}
 
 
 	public static void dispose(){

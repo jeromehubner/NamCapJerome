@@ -55,21 +55,39 @@ public class NamCap {
 	private float screenHeight = AssetLoaderMap.tiledMapHeight -3;
 
 
-
-	public NamCap(int x , int y, float largeur, float hauteur) {
-
-		this.position = new Vector2(x, y);
-		this.namCapWidth = largeur;
-		this.namCapHeight = hauteur;
+//	public NamCap(int x , int y, float largeur, float hauteur) {
+//
+//		this.position = new Vector2(x, y);
+//		this.namCapWidth = largeur;
+//		this.namCapHeight = hauteur;
+//
+//		vitesse = new Vector2(0, 0);
+//		vitesseMemorisee = new Vector2();
+//
+//		boundingCircle = new Circle();
+//
+//		// TODO : Peut-être à placer ailleurs
+//		murs = AssetLoaderMap.layerMurs;
+//		intersections = AssetLoaderMap.layerIntersections;
+//	}
+	
+	
+	public NamCap(Vector2 position) {
+		this.position = position;
+		this.namCapWidth = 1;
+		this.namCapHeight = 1;
 
 		vitesse = new Vector2(0, 0);
 		vitesseMemorisee = new Vector2();
 
 		boundingCircle = new Circle();
 
+		// TODO : Peut-être à placer ailleurs
 		murs = AssetLoaderMap.layerMurs;
 		intersections = AssetLoaderMap.layerIntersections;
 	}
+
+
 
 
 	/**
