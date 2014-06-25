@@ -16,22 +16,18 @@ public class NamCap {
 
 	protected Vector2 position;
 	protected Vector2 vitesse;
-	private Vector2 acceleration;
+//	private Vector2 acceleration;
 
 	private float rotation;
 	private float namCapWidth;
 	private float namCapHeight;
-	
-	private int score;
 
 	/*
 	 * Cette variable correspond au cercle entourant le NamCap.
 	 * Elle sera utilsée pour la gestion des collisions.
 	 */
 	protected Circle boundingCircle;
-
-
-	private int points;
+	
 
 	/*
 	 * Cette variable permet de mémoriser le geste du joueur.
@@ -53,23 +49,6 @@ public class NamCap {
 	/*------- Dimensions de l'écran -------*/
 	private float screenWidth = AssetLoaderMap.tiledMapWidth;
 	private float screenHeight = AssetLoaderMap.tiledMapHeight -3;
-
-
-//	public NamCap(int x , int y, float largeur, float hauteur) {
-//
-//		this.position = new Vector2(x, y);
-//		this.namCapWidth = largeur;
-//		this.namCapHeight = hauteur;
-//
-//		vitesse = new Vector2(0, 0);
-//		vitesseMemorisee = new Vector2();
-//
-//		boundingCircle = new Circle();
-//
-//		// TODO : Peut-être à placer ailleurs
-//		murs = AssetLoaderMap.layerMurs;
-//		intersections = AssetLoaderMap.layerIntersections;
-//	}
 	
 	
 	public NamCap(Vector2 position) {
@@ -82,7 +61,7 @@ public class NamCap {
 
 		boundingCircle = new Circle();
 
-		// TODO : Peut-être à placer ailleurs
+		// TODO : Utilisé les calques d'objet pour créer une HashMap d'objet Murs
 		murs = AssetLoaderMap.layerMurs;
 		intersections = AssetLoaderMap.layerIntersections;
 	}
@@ -141,8 +120,6 @@ public class NamCap {
 
 		// On place les nouveaux bords du NamCap après avoir fait toutes les vérifications
 		boundingCircle.set(position.x +namCapWidth/2, position.y +namCapHeight/2, namCapWidth/2);
-
-
 	}
 
 
@@ -284,7 +261,8 @@ public class NamCap {
 			if(vitesseMemorisee.y != 0)
 				// On vérifie que la position du namCap est proche de 8%
 				if((position.x - (int)position.x) < 0.08){
-					cell = intersections.getCell((int)position.x, (int)position.y);
+					cell = intersections.getCell((int) position.x,
+							(int) position.y);
 					if(cell !=null)
 						if(cell.getTile().getProperties().containsKey("intersection"))
 						{
@@ -574,25 +552,30 @@ public class NamCap {
 	public Vector2 getPosition() {
 		return position;
 	}
+	public void setPosition(Vector2 position) {
+		this.position = position;
+	}
+	
+	
 	public float getRotation() {
 		return rotation;
 	}
+	
+	
 	public Vector2 getVitesse() {
 		return vitesse;
 	}
-
-
+	
+	
+	public float getVitesseDeplacement() {
+		return vitesseDeplacement;
+	}
+	public void setVitesseDeplacement(float vitesseDeplacement) {
+		this.vitesseDeplacement = vitesseDeplacement;
+	}
+	
+	
 	public Circle getBoundingCircle() {
 		return boundingCircle;
-	}
-
-
-	public int getScore() {
-		return score;
-	}
-
-
-	public void setScore(int score) {
-		this.score = score;
 	}
 }

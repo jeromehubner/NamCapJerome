@@ -1,6 +1,8 @@
 package namcap.main.helpers;
 
+import namcap.main.GameStateEnum;
 import namcap.main.gameObject.NamCap;
+import namcap.main.gameWorld.GameWorld;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -15,7 +17,7 @@ import com.badlogic.gdx.InputProcessor;
  *
  */
 public class InputHandler implements InputProcessor {
-	
+	private GameWorld gameWorld;
 	private NamCap namCap;
 	private int touchDownX, touchDownY;
 	
@@ -29,16 +31,13 @@ public class InputHandler implements InputProcessor {
 	
 	// Cette variable doit être comprise entre 0 et 10.
 	private float sensibiliteAccelerometre = 3;
-	private float sensibiliteTactile = 60;
+	private float sensibiliteTactile = 65;
 	/*------------------------------------------------*/
 
-
 	
-	public InputHandler(NamCap namCap) {
-		/*
-		 * Le NamCap est celui de la classe GameWorld.
-		 */
-		this.namCap = namCap;
+	public InputHandler(GameWorld gameWorld) {
+		this.gameWorld = gameWorld;
+		namCap = gameWorld.getNamCap();
 		
 //		vitesseExponentielle = new Vector2();
 	}
@@ -72,6 +71,14 @@ public class InputHandler implements InputProcessor {
 			
 		case Input.Keys.SPACE:
 			namCap.stop();
+			break;
+			
+		case Input.Keys.BACK:
+			gameWorld.setGameState(GameStateEnum.PAUSE);
+			break;
+			
+		case Input.Keys.MENU:
+			gameWorld.setGameState(GameStateEnum.PAUSE);
 			break;
 		}
 		return true;
@@ -172,7 +179,6 @@ public class InputHandler implements InputProcessor {
 	 */
 	public boolean accelerometre(){
 		// Les inclinaisons CI-DESSOUS tiennent compte du mode paysage du jeu.
-
 		if(Gdx.input.getAccelerometerX()<-sensibiliteAccelerometre)	// Inclinaison au dela de soi
 			namCap.memorizeGoUp();
 		

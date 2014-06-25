@@ -12,98 +12,78 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
- public class APropos implements Screen {
+public class APropos implements Screen {
 
-	
-	MainGame game;
-	Stage stage;
-	
-	private Image retourButton;
-//	private Actor plan2Image;
-	
-	float largeurscreen = Gdx.graphics.getWidth();
-	float hauteurscreen =  Gdx.graphics.getHeight();
-	
-	public APropos(MainGame game) {
-		this.game = game;
-	}
+	private Stage stage;
+
+	private Image buttonBack;
+
+	private float largeurscreen = Gdx.graphics.getWidth();
+	private float hauteurscreen = Gdx.graphics.getHeight();
 
 	@Override
 	public void render(float delta) {
-		
+
 		Gdx.gl.glClearColor(0f, 0f, 0f, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
 		stage.act(delta);
 		stage.draw();
-//		Table.drawDebug(stage);
-	
-
 	}
 
-		
-		@Override
+	@Override
 	public void show() {
-		
+
 		stage = new Stage();
 		Gdx.input.setInputProcessor(stage);
 		Gdx.input.setCatchBackKey(true);
 		Gdx.input.setCatchMenuKey(true);
-		
-		
-		Image plan2Image = new Image(AssetLoader.plan2Texture);
-		plan2Image.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		
-		
-		stage.addActor(plan2Image);
-		
-		retourButton = new Image(new Texture("data/bouton8.png"));
-		retourButton.setPosition ( largeurscreen * 1/20.0f , hauteurscreen * 0/9.0f);
-		retourButton.setSize(largeurscreen * 18/20 , hauteurscreen * 1/6);
-		retourButton.addListener(new InputListener() {
-		public boolean touchDown(InputEvent event, float x, float y,
-				int pointer, int image) {
-			
-			game.setScreen((Screen) new Options(game));
-			
-			return true;
-		}
-		
+
+		Image screenAbout = new Image(AssetLoader.TEXTURE_SCREEN_ABOUT);
+		screenAbout.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
+		stage.addActor(screenAbout);
+
+		buttonBack = new Image(new Texture("button/back.png"));
+		buttonBack.setPosition(largeurscreen * 1 / 20.0f,
+				hauteurscreen * 0 / 9.0f);
+		buttonBack.setSize(largeurscreen * 18 / 20, hauteurscreen * 1 / 6);
+
+		stage.addActor(buttonBack);
+
+		installListener();
+	}
+
+	private void installListener() {
+		buttonBack.addListener(new InputListener() {
+			public boolean touchDown(InputEvent event, float x, float y,
+					int pointer, int image) {
+
+				MainGame.getUniqueMainGame().setScreen((Screen) new Options());
+
+				return true;
+			}
 		});
-		
-		stage.addActor(retourButton);
-		
-		
-		}
-			
+	}
+
 	@Override
 	public void resize(int width, int height) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void hide() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void pause() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void resume() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void dispose() {
-		// TODO Auto-generated method stub
-		
+		stage.dispose();
 	}
-
 }

@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="20" height="35" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="1_food" tilewidth="32" tileheight="32">
+  <image source="../../tilesets/food/level_3.png" width="640" height="1312"/>
+  <tile id="640">
+   <properties>
+    <property name="namCap0" value=""/>
+   </properties>
+  </tile>
+  <tile id="641">
+   <properties>
+    <property name="fantome0" value=""/>
+   </properties>
+  </tile>
+  <tile id="642">
+   <properties>
+    <property name="point0" value=""/>
+   </properties>
+  </tile>
+  <tile id="643">
+   <properties>
+    <property name="block" value=""/>
+   </properties>
+  </tile>
+  <tile id="645">
+   <properties>
+    <property name="intersection" value=""/>
+   </properties>
+  </tile>
+  <tile id="646">
+   <properties>
+    <property name="surprise0" value=""/>
+   </properties>
+  </tile>
+  <tile id="660">
+   <properties>
+    <property name="namCap1" value=""/>
+   </properties>
+  </tile>
+  <tile id="661">
+   <properties>
+    <property name="fantome1" value=""/>
+   </properties>
+  </tile>
+  <tile id="666">
+   <properties>
+    <property name="surprise1" value=""/>
+   </properties>
+  </tile>
+  <tile id="680">
+   <properties>
+    <property name="namCap2" value=""/>
+   </properties>
+  </tile>
+  <tile id="681">
+   <properties>
+    <property name="fantome2" value=""/>
+   </properties>
+  </tile>
+  <tile id="686">
+   <properties>
+    <property name="surprise2" value=""/>
+   </properties>
+  </tile>
+  <tile id="706">
+   <properties>
+    <property name="surprise3" value=""/>
+   </properties>
+  </tile>
+  <tile id="726">
+   <properties>
+    <property name="surprise4" value=""/>
+   </properties>
+  </tile>
+  <tile id="746">
+   <properties>
+    <property name="surprise5" value=""/>
+   </properties>
+  </tile>
+  <tile id="766">
+   <properties>
+    <property name="surprise6" value=""/>
+   </properties>
+  </tile>
+  <tile id="786">
+   <properties>
+    <property name="surprise7" value=""/>
+   </properties>
+  </tile>
+  <tile id="806">
+   <properties>
+    <property name="surprise8" value=""/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="821" name="foot" tilewidth="32" tileheight="32">
+  <image source="../../tilesets/sport/1_foot.png" trans="aa0000" width="640" height="1312"/>
+  <tile id="640">
+   <properties>
+    <property name="namcap0" value=""/>
+   </properties>
+  </tile>
+  <tile id="641">
+   <properties>
+    <property name="fantome0" value=""/>
+   </properties>
+  </tile>
+  <tile id="642">
+   <properties>
+    <property name="point0" value=""/>
+   </properties>
+  </tile>
+  <tile id="643">
+   <properties>
+    <property name="block" value=""/>
+   </properties>
+  </tile>
+  <tile id="645">
+   <properties>
+    <property name="intersection" value=""/>
+   </properties>
+  </tile>
+  <tile id="646">
+   <properties>
+    <property name="surprise0" value=""/>
+   </properties>
+  </tile>
+  <tile id="660">
+   <properties>
+    <property name="namCap1" value=""/>
+   </properties>
+  </tile>
+  <tile id="661">
+   <properties>
+    <property name="fantome1" value=""/>
+   </properties>
+  </tile>
+  <tile id="662">
+   <properties>
+    <property name="point1" value=""/>
+   </properties>
+  </tile>
+  <tile id="666">
+   <properties>
+    <property name="surprise1" value=""/>
+   </properties>
+  </tile>
+  <tile id="680">
+   <properties>
+    <property name="namCap2" value=""/>
+   </properties>
+  </tile>
+  <tile id="681">
+   <properties>
+    <property name="fantome2" value=""/>
+   </properties>
+  </tile>
+  <tile id="686">
+   <properties>
+    <property name="surprise2" value=""/>
+   </properties>
+  </tile>
+  <tile id="706">
+   <properties>
+    <property name="surprise3" value=""/>
+   </properties>
+  </tile>
+  <tile id="726">
+   <properties>
+    <property name="surprise4" value=""/>
+   </properties>
+  </tile>
+  <tile id="746">
+   <properties>
+    <property name="surprise5" value=""/>
+   </properties>
+  </tile>
+  <tile id="766">
+   <properties>
+    <property name="surprise6" value=""/>
+   </properties>
+  </tile>
+  <tile id="786">
+   <properties>
+    <property name="surprise7" value=""/>
+   </properties>
+  </tile>
+  <tile id="806">
+   <properties>
+    <property name="surprise8" value=""/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="layerBackground" width="20" height="35">
+  <data encoding="base64" compression="zlib">
+   eJzl1QMSGAgABMHYtm3btm3bts1DbNu2bdu2bV7nHbdV/YStCRDg/7WABCIwQQhKMIITgpCEIjRhCEs4whOBiEQiMlGISjSiE4OYxCI2cYhLPOKTgIQkIjFJSEoykpOClKQiNWlISzrSk4GMZCIzWchKNrKTg5zkIjd5yEs+8lOAghSiMEUoSjGKU4KSlKI0ZShLOcpTgYpUojJVqEo1qlODmtSiNnWoSz3q04CGNKIxTWhKM5rTgpa0ojVtaEs72tOBjnSiM13oSje604Oe9KI3fehLP/ozgIEMYjBDGMowhjOCkfzF3/zDv4xiNGMYyzjGM4GJTGIyU5jKNKYzg5nMYjZzmMs85rOAhSxiMUtYyjKWs4KVrGI1a1jLOtazgY1sYjNb2Mo2trODnexiN3vYyz72c4CDHOIwRzjKMY5zgpOc4jRnOMs5znOBi1ziMle4yjWuc4Ob3OI2d7jLPe7zgIc84jFPeMoznvOCl7ziNW94yzve84GPfOIzX/jKN77zg5/84jd/zh+QQAQmCEEJRnBCEJJQhCYMYQlHeCIQkUhEJgpRiUZ0YhCTWMQmDnGJR3wSkJBEJCYJSUlGclKQklSkJg1pSUd6MpCRTGQmC1nJRnZykJNc5CYPeclHfgpQkEIUpghFKUZxSlCSUpSmDGUpR3kqUJFKVKYKValGdWpQk1rUpg51qUd9GtCQRjSmCU1pRnNa0JJWtKYNbWlHezrQkU50pgtd6UZ3etCTXvSmD33pR38GMJBBDGYIQxnGcEYwkr/4m3/4l1GMZgxjGcd4JjCRSUxmClOZxnRmMJNZzGYOc5nHfBawkEUsZglLWcZyVrCSVaxmDWtZx3o2sJFNbGYLW9nGdnawk13sZg972cd+DnCQQxzmCEc5xnFOcJJTnOYMZznHeS5wkUtc5gpXucZ1bnCTW9zmDne5x30e8JBHPOYJT3nGc17wkle85g1vecd7PvCRT3zmC1/5xnd+8JNf/OZP+AMSiMAEISjBCE4IQhKK0IQhLOEITwQiEonIRCEq0YhODGISi9jEIS7xiE8CEpKIxCQhKclITgpSkorUpCEt6UhPBjKSicxkISvZyE4OcpKL3OQhL/nITwEKUojCFKEoxShOCUpSitKUoSzlKE8FKlKJylShKtWoTg1qUova1KEu9ahPAxrSiMY0oSnNaE4LWtKK1rShLe1oTwc60onOdKEr3ehOD3rSi970oS/96M8A/gOMhiFS
+  </data>
+ </layer>
+ <layer name="layerMurs" width="20" height="35">
+  <data encoding="base64" compression="zlib">
+   eJzlk0sOgCAMRI1n9+CuTEjt/Co7mxillPFBmeP4V1zn+2FzqL5bv4utY3lyirOrW3N1XvEoPZcv0VOcqZ6qT/ScmOzX7Wf3RrmU12GfeAT9a8Lp8ilmRy/hSvmm/k34mF6tWcdT/7K1KR9a94WP6U75pn3dydeN67frD6SjeulwMu85PlD+VV5hd4rpobqUSfGo80U9mNxJxJecI7vPO4Kxu/usbDfrSKkT
+  </data>
+ </layer>
+ <layer name="layerIntersections" width="20" height="35">
+  <data encoding="base64" compression="zlib">
+   eJztVUEOgCAMIzzed3siIXOVDu2QxF5Et6VdhVHKj6c46vW9fbMxr7bPV8LjQbwZehA8btZPJTwNrJ9KRDTYHjJ8ZbhGmlf7uss5YWI2R70Hov8b5bylb4Y7E6hvZi7au2e2j0jdHd9KH3t+ZnYz9Wogfcz6K2D3KXoq5/0JA18pcQ==
+  </data>
+ </layer>
+ <layer name="layerPonts" width="20" height="35">
+  <data encoding="base64" compression="zlib">
+   eJztwQENAAAAwqD3T20PBxQAAPwaCvAAAQ==
+  </data>
+ </layer>
+ <objectgroup name="layerObjectPoints" width="20" height="35"/>
+ <objectgroup name="layerObjectPositions" width="20" height="35"/>
+</map>

@@ -11,12 +11,14 @@ public class LanceurAndroid extends AndroidApplication{
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		
 		AndroidApplicationConfiguration cfg = new AndroidApplicationConfiguration();
 		cfg.useGL20 = true;
 		
-		initialize(new MainGame(), cfg);
+		//Permet d'eviter que l'ecran se mette en veille lors du jeu
+		cfg.useWakelock = false;
+		
+		initialize(MainGame.getUniqueMainGame(), cfg);
 	}
 }

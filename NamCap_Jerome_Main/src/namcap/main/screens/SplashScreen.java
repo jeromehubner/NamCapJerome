@@ -1,6 +1,5 @@
 package namcap.main.screens;
 
-
 import namcap.main.MainGame;
 import namcap.main.helpers.AssetLoader;
 
@@ -13,22 +12,15 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 public class SplashScreen implements Screen {
 
-	MainGame game;
-	Stage stage;
+	private Stage stage;
 	private float dureeSplashScreen = 0;
-	
-	public SplashScreen(MainGame game) {
 
-		// TODO Auto-generated constructor stub
-		this.game = game;
-	}
 
 	@Override
 	public void render(float delta) {
 
-		// TODO Auto-generated method stub
-		Gdx.gl.glClearColor( 0f, 0f, 0f, 1f );
-        Gdx.gl.glClear( GL20.GL_COLOR_BUFFER_BIT );
+		Gdx.gl.glClearColor(0f, 0f, 0f, 1f);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		stage.act(delta);
 		stage.draw();
@@ -36,59 +28,47 @@ public class SplashScreen implements Screen {
 
 	@Override
 	public void resize(int width, int height) {
-		// TODO Auto-generated method stub
-		stage.setViewport( width, height, true );
-
+		stage.setViewport(width, height, true);
 	}
 
 	@Override
 	public void show() {
-		// TODO Auto-generated method stub
 		stage = new Stage();
 
 		Gdx.input.setInputProcessor(stage);
-		
-		Image splashImage = new Image(AssetLoader.chargementTexture);
-		splashImage.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-//		splashImage.addAction(Actions.fadeIn( 2f ));
-		splashImage.addAction( Actions.sequence( Actions.fadeOut( 0.001f ), Actions.fadeIn(dureeSplashScreen), Actions.run(onSplashFinishedRunnable) ) );
-		
 
+		Image screenSplash = new Image(AssetLoader.TEXTURE_SCREEN_LOADING);
+		screenSplash.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		// splashImage.addAction(Actions.fadeIn( 2f ));
+		screenSplash.addAction(Actions.sequence(Actions.fadeOut(0.001f),
+				Actions.fadeIn(dureeSplashScreen),
+				Actions.run(onSplashFinishedRunnable)));
 
-		stage.addActor(splashImage);
+		stage.addActor(screenSplash);
 	}
-	
+
 	Runnable onSplashFinishedRunnable = new Runnable() {
-		
+
 		@Override
 		public void run() {
-			// TODO Auto-generated method stub
-			game.setScreen(new MainMenuScreen(game));
+			MainGame.getUniqueMainGame().setScreen(new Home());
 		}
 	};
 
 	@Override
 	public void hide() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void pause() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void resume() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void dispose() {
-		// TODO Auto-generated method stub
 		stage.dispose();
 	}
-
 }

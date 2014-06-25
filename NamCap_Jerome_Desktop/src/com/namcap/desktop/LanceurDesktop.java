@@ -16,7 +16,6 @@ public class LanceurDesktop {
 		
 		// Résolution NEXUS 4 (768x1280)
 		// Résolution de l'émulateur Nexus 4 (729x438) => Format Paysage
-		new LwjglApplication(new MainGame(), config);
+		new LwjglApplication(MainGame.getUniqueMainGame(), config);
 	}
-
 }

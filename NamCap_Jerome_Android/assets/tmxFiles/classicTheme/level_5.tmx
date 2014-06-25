@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="20" height="35" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="foot" tilewidth="32" tileheight="32">
+  <image source="../../tilesets/classic/level_5.png" trans="aa0000" width="640" height="1312"/>
+  <tile id="640">
+   <properties>
+    <property name="namcap0" value=""/>
+   </properties>
+  </tile>
+  <tile id="641">
+   <properties>
+    <property name="fantome0" value=""/>
+   </properties>
+  </tile>
+  <tile id="642">
+   <properties>
+    <property name="point0" value=""/>
+   </properties>
+  </tile>
+  <tile id="643">
+   <properties>
+    <property name="block" value=""/>
+   </properties>
+  </tile>
+  <tile id="645">
+   <properties>
+    <property name="intersection" value=""/>
+   </properties>
+  </tile>
+  <tile id="646">
+   <properties>
+    <property name="surprise0" value=""/>
+   </properties>
+  </tile>
+  <tile id="660">
+   <properties>
+    <property name="namCap1" value=""/>
+   </properties>
+  </tile>
+  <tile id="661">
+   <properties>
+    <property name="fantome1" value=""/>
+   </properties>
+  </tile>
+  <tile id="662">
+   <properties>
+    <property name="point1" value=""/>
+   </properties>
+  </tile>
+  <tile id="666">
+   <properties>
+    <property name="surprise1" value=""/>
+   </properties>
+  </tile>
+  <tile id="680">
+   <properties>
+    <property name="namCap2" value=""/>
+   </properties>
+  </tile>
+  <tile id="681">
+   <properties>
+    <property name="fantome2" value=""/>
+   </properties>
+  </tile>
+  <tile id="686">
+   <properties>
+    <property name="surprise2" value=""/>
+   </properties>
+  </tile>
+  <tile id="706">
+   <properties>
+    <property name="surprise3" value=""/>
+   </properties>
+  </tile>
+  <tile id="726">
+   <properties>
+    <property name="surprise4" value=""/>
+   </properties>
+  </tile>
+  <tile id="746">
+   <properties>
+    <property name="surprise5" value=""/>
+   </properties>
+  </tile>
+  <tile id="766">
+   <properties>
+    <property name="surprise6" value=""/>
+   </properties>
+  </tile>
+  <tile id="786">
+   <properties>
+    <property name="surprise7" value=""/>
+   </properties>
+  </tile>
+  <tile id="806">
+   <properties>
+    <property name="surprise8" value=""/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="821" name="1_classic" tilewidth="32" tileheight="32">
+  <image source="../../tilesets/classic/1_classic.png" width="640" height="1312"/>
+ </tileset>
+ <layer name="layerBackground" width="20" height="35">
+  <data encoding="base64" compression="zlib">
+   eJzl0wOSIAYAAMFNzjkrZ9u2bdu2bdu2bdu2bdu20v/IVPUTJiDg/1WmQAEBmclCVrKRnRzkJBe5yUNe8pGfAhSkEIUpQlGKUZwSlKQUpSlDWcpRngpUpBKVqUJVqlGdGtSkFrWpQ13qUZ8GNKQRjWlCU5rRnBa0pBWtaUNb2tGeDnSkE53pQle60Z0e9KQXvelDX/rRnwEMZBCDGcJQhjGcEYxkFKMZw1jGMZ4JTGQSk5nCVKYxnRnMZBazmcNc5jGfBSxkEYtZwlKWsZwVrGQVq1nDWtaxng1sZBOb2cJWtrGdHexkF7vZw172sZ8DHOQQhznCUY5xnBOc5BSnOcNZznGeC1zkEpe5wlWucZ0b3OQWt7nDXe5xnwc85BGPecJTnvGcF7zkFa95w1ve8Z4PfOQTn/nCV77xnR/85Be/+UNA4ICAv/ibQAQmCEEJRnBC8A8hCUVowhCWcIQnAhGJRGT+JQpRiUZ0YhCTWMQmDnGJR3wSkJBEJCYJSUlGclKQklSkJg1pSUd6MpCRTGQmC1nJRnZykJNc5CYPeclHfgpQkEIUpghFKUZxSlCSUpSmDGUpR3kqUJFKVKYKValGdWpQk1rUpg51qUd9GtCQRjSmCU1pRnNa0JJWtKYNbWlHezrQkU50pgtd6UZ3etCTXvSmD33pR38GMJBBDGYIQxnGcEYwklGMZgxjGcd4JjCRSUxmClOZxnRmMJNZzGYOc5nHfBawkEUsZglLWcZyVrCSVaxmDWtZx3o2sJFNbGYLW9nGdnawk13sZg972cd+DnCQQxzmCEc5xnFOcJJTnOYMZznHeS5wkUtc5gpXucZ1bnCTW9zmDne5x30e8JBHPOYJT3nGc17wkle85g1vecd7PvCRT3zmC1/5xnd+8JNf/OYPAUH8z98EIjBBCEowghOCfwhJKEIThrCEIzwRiEgkIvMvUYhKNKITg5jEIjZxiEs84pOAhCQiMUlISjKSk4KUpCI1aUhLOtKTgYxkIjNZyEo2spODnOQiN3nISz7yU4CCFKIwRShKMYpTgpKUojRlKEs5ylOBilSiMlWoSjWqU4Oa1KI2dahLPerTgIY0ojFNaEozmtOClrSiNW1oSzva04GOdKIzXehKN7rTg570ojd96Es/+jOAgQxiMEMYyjCGM4KRjGI0YxjLOMYzgYlMYjJTmMo0pjODmcxiNnOYyzzms4CFLGIxS1jKMpazgpWsYjVrWMs61rOBjfwHQchDOg==
+  </data>
+ </layer>
+ <layer name="layerMurs" width="20" height="35">
+  <data encoding="base64" compression="zlib">
+   eJzllNsKwCAMQ2Xfvg/fq5QkTUR9WaGIs55e5xj/kvfxNLWd+cgfO6sr+tbxqk3qm/Gc+HbzWA9O8Tp+V2NUA3We8Bx/Ti5qnpVt9aXiQPsbPNXvpL+d73nv/JsuL/Gl9ugeq8kJnpPvSm0dntOPbnVsnHlWc8dsuzyruLyT78GK3OCxWWVn6C6KL32DbvFWbXbwqrjvQcpzFMWM9AO52Z4V
+  </data>
+ </layer>
+ <layer name="layerIntersections" width="20" height="35">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFlII2Jvw0uloYJqSWGm6gJaCnXeh2DgaA7BZCaQBXWsAnR6oefO4jB5DidnLSAj5z6QkI2YmeZ4k1j5SwGYj8SwjQwr/USDeUAnS78MXtQLgLW5gMpnDD5z5CeogxH5v64VC/DWTeHshwI6X8w8Un1k5CAABz0TBZ
+  </data>
+ </layer>
+ <layer name="layerPonts" width="20" height="35">
+  <data encoding="base64" compression="zlib">
+   eJztwQENAAAAwqD3T20PBxQAAPwaCvAAAQ==
+  </data>
+ </layer>
+ <objectgroup name="layerObjectPoints" width="20" height="35"/>
+ <objectgroup name="layerObjectPositions" width="20" height="35"/>
+</map>
