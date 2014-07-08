@@ -85,14 +85,26 @@ public class MyDialogBox {
 	 */
 	public Dialog getPauseDialog(final GameWorld gameWorld) {
 		TextButton textButtonResume = new TextButton("Resume...", skin);
+		TextButton textButtonRetry = new TextButton("Retry", skin);
 		TextButton textButtonHome = new TextButton("Home", skin);
 		TextButton textButtonQuit = new TextButton("Quit", skin);
-		
+
 		textButtonResume.addListener(new InputListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {
 				gameWorld.setGameState(GameStateEnum.READY);
+				MainGame.getUniqueMainGame().setScreen(
+						GameScreen.getUniqueGameScreen());
+				return true;
+			}
+		});
+
+		textButtonRetry.addListener(new InputListener() {
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y,
+					int pointer, int button) {
+				GameScreen.getUniqueGameScreen().initGameScreen();
 				MainGame.getUniqueMainGame().setScreen(
 						GameScreen.getUniqueGameScreen());
 				return true;
@@ -107,7 +119,7 @@ public class MyDialogBox {
 				return true;
 			}
 		});
-		
+
 		textButtonQuit.addListener(new InputListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y,
@@ -119,6 +131,7 @@ public class MyDialogBox {
 
 		Dialog dialog = initDialog("Pause");
 		dialog.getButtonTable().add(textButtonResume).center().row();
+		dialog.getButtonTable().add(textButtonRetry).center().row();
 		dialog.getButtonTable().add(textButtonHome).center().row();
 		dialog.getButtonTable().add(textButtonQuit).center().row();
 		return dialog;

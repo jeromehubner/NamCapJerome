@@ -116,6 +116,7 @@ public class GameWorld {
 				if (fantome.collision(surprise)) {
 					Gdx.input.vibrate(100);
 					surprise = null;
+					nbPointsCapture = 0;
 				}
 		}
 

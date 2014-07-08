@@ -36,11 +36,6 @@ public class GameScreen implements Screen {
 		gameWorld = new GameWorld();
 		gameRenderer = new GameRenderer(gameWorld);
 		inputHandler = new InputHandler(gameWorld);
-		
-		Music music;
-		music=Gdx.audio.newMusic(Gdx.files.internal("sounds/music.mp3"));
-		music.setLooping(true);
-		music.play();
 	}
 
 	private final static TextureAtlas TEXTURE_ATLAS = new TextureAtlas(

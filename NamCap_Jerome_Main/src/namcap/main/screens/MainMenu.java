@@ -4,6 +4,7 @@ import namcap.main.MainGame;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -37,7 +38,6 @@ public class MainMenu implements Screen {
 
 	@Override
 	public void show() {
-
 		stage = new Stage();
 		Gdx.input.setInputProcessor(stage);
 		Gdx.input.setCatchBackKey(true);

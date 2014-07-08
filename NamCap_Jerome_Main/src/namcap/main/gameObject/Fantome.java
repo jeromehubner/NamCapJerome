@@ -9,7 +9,7 @@ public class Fantome extends NamCap {
 
 	public Fantome(Vector2 position) {
 		super(position);
-		memorizeGoRight();
+		// memorizeGoRight();
 	}
 
 	@Override

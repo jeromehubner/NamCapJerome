@@ -345,6 +345,8 @@ public class GameRenderer {
 	 * @param runtime
 	 */
 	public void renderSupriseInfos() {
+		Gdx.gl.glClearColor(0, 0, 0, 1);
+		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		Stage stage = new Stage();
 		stage.addActor(new MyDialogBox().getInfoSurpriseDialog(gameWorld));
 		Gdx.input.setInputProcessor(stage);
@@ -357,6 +359,8 @@ public class GameRenderer {
 	 * @param runtime
 	 */
 	public void renderPause() {
+		Gdx.gl.glClearColor(0, 0, 0, 1);
+		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		Stage stage = new Stage();
 		stage.addActor(new MyDialogBox().getPauseDialog(gameWorld));
 		Gdx.input.setInputProcessor(stage);
@@ -369,6 +373,8 @@ public class GameRenderer {
 	 * @param runtime
 	 */
 	public void renderGameWin() {
+		Gdx.gl.glClearColor(0, 0, 0, 1);
+		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		Stage stage = new Stage();
 		stage.addActor(new MyDialogBox().getYouWinDialog());
 		Gdx.input.setInputProcessor(stage);
@@ -382,6 +388,8 @@ public class GameRenderer {
 	 * @param runtime
 	 */
 	public void renderGameOver() {
+		Gdx.gl.glClearColor(0, 0, 0, 1);
+		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		Stage stage = new Stage();
 		stage.addActor(new MyDialogBox().getYouLoseDialog());
 		Gdx.input.setInputProcessor(stage);

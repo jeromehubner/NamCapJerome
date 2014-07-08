@@ -71,7 +71,7 @@ public class Surprise {
 		// il faut ajouter autant de case que le nbEffetSurprise -1 si on veux
 		// avoir accès à toutes les surprises
 		switch (new Random().nextInt(nbSurpriseEffect)) {
-		// switch (5) {
+//		 switch (15) {
 		case 0:
 			stopAllFantomes(gameWorld);
 			break;
